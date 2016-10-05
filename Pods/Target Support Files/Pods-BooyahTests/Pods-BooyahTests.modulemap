@@ -1,0 +1,6 @@
+framework module Pods_BooyahTests {
+  umbrella header "Pods-BooyahTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

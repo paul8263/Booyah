@@ -1,0 +1,6 @@
+framework module Pods_Booyah {
+  umbrella header "Pods-Booyah-umbrella.h"
+
+  export *
+  module * { export * }
+}
