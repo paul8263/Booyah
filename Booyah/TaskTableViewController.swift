@@ -18,9 +18,9 @@ class TaskTableViewController: UITableViewController {
     
     private func loadTasks() {
         taskList += [
-            Task(title: "Task 1", description: "", date: Date(), userId: "", address: "Sydney", latitude: 0.0, longitude: 0.0),
-            Task(title: "Task 2", description: "", date: Date(), userId: "", address: "Melbourne", latitude: 0.0, longitude: 0.0),
-            Task(title: "Task 3", description: "", date: Date(), userId: "", address: "Adelaide", latitude: 0.0, longitude: 0.0),
+            Task(title: "Task 1", description: "Get the Vinegar for me at New Ren Ren Supermarket", date: Date() - TimeInterval(86400.0), userId: "", address: "Sydney", latitude: 0.0, longitude: 0.0),
+            Task(title: "Task 2", description: "Finish the accounting final exam", date: Date(), userId: "", address: "Melbourne", latitude: 0.0, longitude: 0.0),
+            Task(title: "Task 3", description: "Pick up my friend", date: Date(), userId: "", address: "Adelaide", latitude: 0.0, longitude: 0.0),
         ]
     }
     
@@ -40,6 +40,12 @@ class TaskTableViewController: UITableViewController {
         
     }
     
+    private func setUpTableView() {
+        self.tableView.separatorStyle = .none
+        self.tableView.rowHeight = 100
+        self.tableView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.96, alpha:1.00)
+    }
+    
     func filterTask(keyword: String) {
         self.filteredTaskList = taskList.filter({ (task) -> Bool in
 //            Will Change it to postion later
@@ -52,7 +58,7 @@ class TaskTableViewController: UITableViewController {
     }
 
     @IBAction func addButtonTouched(_ sender: UIBarButtonItem) {
-        
+        performSegue(withIdentifier: "AddTaskSegue", sender: nil)
     }
     
 
@@ -64,9 +70,9 @@ class TaskTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        loadTasks()
         setUpSearchBar()
+        setUpTableView()
+        loadTasks()
     }
     
 
@@ -90,21 +96,28 @@ class TaskTableViewController: UITableViewController {
             return taskList.count
         }
     }
+    
+    private func loadTaskToCell(task: Task, taskTableViewCell: TaskTableViewCell) {
+        taskTableViewCell.taskTitleLabel.text = task.title
+        taskTableViewCell.taskAddressLabel.text = task.address
+//        Image view will be done later
+    }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell", for: indexPath) as! TaskTableViewCell
         
         if searchController.isActive {
-            cell.textLabel?.text = filteredTaskList[indexPath.row].title
+            loadTaskToCell(task: filteredTaskList[indexPath.row], taskTableViewCell: cell)
         } else {
-            cell.textLabel?.text = taskList[indexPath.row].title
+            loadTaskToCell(task: taskList[indexPath.row], taskTableViewCell: cell)
         }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
         performSegue(withIdentifier: "TaskDetailSegue", sender: indexPath)
 //        tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -152,10 +165,19 @@ class TaskTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "TaskDetailSegue" {
-//            self.searchController.isActive = false
             let taskDetailTableViewController = segue.destination as! TaskDetailTableViewController
             let indexPath = sender as! IndexPath
-            taskDetailTableViewController.task = self.taskList[indexPath.row]
+            if searchController.isActive {
+                taskDetailTableViewController.task = self.filteredTaskList[indexPath.row]
+            } else {
+                taskDetailTableViewController.task = self.taskList[indexPath.row]
+            }
+            
+        } else if segue.identifier == "AddTaskSegue" {
+            let navigationController = segue.destination as! UINavigationController
+            let addModifyTaskTableViewController = navigationController.viewControllers.first as! AddModifyTaskTableViewController
+            addModifyTaskTableViewController.isAddingTask = true
+            addModifyTaskTableViewController.task = nil
         }
     }
     

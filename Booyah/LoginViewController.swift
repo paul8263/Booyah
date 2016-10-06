@@ -12,6 +12,8 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    
     
     
     @IBAction func SignInButtonTouched(_ sender: UIButton) {
@@ -22,6 +24,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        blurEffectView.frame = self.view.frame
+        backgroundImageView.addSubview(blurEffectView)
     }
 
     override func didReceiveMemoryWarning() {

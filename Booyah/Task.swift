@@ -17,7 +17,9 @@ class Task {
     var latitude: Double
     var longitude: Double
     
-    init(title: String, description: String, date: Date, userId: String, address: String, latitude: Double, longitude: Double) {
+    
+    
+    init(title: String = "", description: String = "", date: Date = Date(), userId: String = "", address: String = "", latitude: Double = 0.0, longitude: Double = 0.0) {
         self.title = title
         self.description = description
         self.date = date

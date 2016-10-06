@@ -11,7 +11,7 @@ import JSQMessagesViewController
 
 class ChatRoomViewController: JSQMessagesViewController {
     
-    var user: User!
+    var chattingWithUser: User!
     
     var messageList = [JSQMessage]()
     
@@ -54,7 +54,7 @@ class ChatRoomViewController: JSQMessagesViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
-        navigationItem.title = user.displayName
+        navigationItem.title = chattingWithUser.displayName
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
@@ -104,6 +104,10 @@ class ChatRoomViewController: JSQMessagesViewController {
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
+        let message = JSQMessage(senderId: self.senderId, senderDisplayName: "", date: Date(), text: text)!
+        messageList.append(message)
+        JSQSystemSoundPlayer.jsq_playMessageSentSound()
+        finishSendingMessage()
     }
     
     override func didPressAccessoryButton(_ sender: UIButton!) {

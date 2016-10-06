@@ -75,17 +75,19 @@ class ChatTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            userList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
+//        else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
@@ -112,7 +114,7 @@ class ChatTableViewController: UITableViewController {
         if segue.identifier == "ChatRoomSegue" {
             let indexPath = sender as! IndexPath
             let chatRoomViewController = segue.destination as! ChatRoomViewController
-            chatRoomViewController.user = userList[indexPath.row]
+            chatRoomViewController.chattingWithUser = userList[indexPath.row]
 //            Todo
             chatRoomViewController.senderId = "FakedSenderId"
             chatRoomViewController.senderDisplayName = ""
