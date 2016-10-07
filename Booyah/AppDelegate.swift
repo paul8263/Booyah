@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+//        Change the background color while doing flipping animation
+        window?.layer.backgroundColor = UIColor(red:0.38, green:0.69, blue:0.79, alpha:1.00).cgColor
+        
+        FIRApp.configure()
+        
         return true
     }
 

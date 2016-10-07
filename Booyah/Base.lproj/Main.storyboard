@@ -118,10 +118,10 @@
             </objects>
             <point key="canvasLocation" x="-1306.4000000000001" y="-535.68215892053979"/>
         </scene>
-        <!--Sign In View Controller-->
+        <!--Sign Up View Controller-->
         <scene sceneID="mD0-oS-TOn">
             <objects>
-                <viewController id="hi5-Eq-ekJ" customClass="SignInViewController" customModule="Booyah" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hi5-Eq-ekJ" customClass="SignUpViewController" customModule="Booyah" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kTF-Zz-FRZ"/>
                         <viewControllerLayoutGuide type="bottom" id="oVk-tQ-4pV"/>
@@ -130,6 +130,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_background" translatesAutoresizingMaskIntoConstraints="NO" id="yNS-EF-ZL4"/>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tqb-c1-9YO">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="CGN-be-IhL"/>
@@ -175,19 +176,24 @@
                             <constraint firstItem="uIf-OP-QwT" firstAttribute="top" secondItem="lPr-9p-ExR" secondAttribute="bottom" constant="20" id="5gl-DW-H33"/>
                             <constraint firstItem="oVk-tQ-4pV" firstAttribute="top" secondItem="8rf-3P-x3M" secondAttribute="bottom" constant="50" id="5hX-nD-aAr"/>
                             <constraint firstItem="uIf-OP-QwT" firstAttribute="centerX" secondItem="BKf-1o-d7Q" secondAttribute="centerX" id="6Wx-nC-aJR"/>
+                            <constraint firstItem="yNS-EF-ZL4" firstAttribute="leading" secondItem="BKf-1o-d7Q" secondAttribute="leading" id="6ZY-uv-RJ7"/>
                             <constraint firstItem="CxC-bn-u0m" firstAttribute="top" secondItem="buT-NT-2Zw" secondAttribute="bottom" constant="50" id="7sl-Sh-pE4"/>
                             <constraint firstItem="lPr-9p-ExR" firstAttribute="top" secondItem="tqb-c1-9YO" secondAttribute="bottom" constant="30" id="BOu-pG-qPP"/>
+                            <constraint firstItem="oVk-tQ-4pV" firstAttribute="top" secondItem="yNS-EF-ZL4" secondAttribute="bottom" id="I8s-mb-a1g"/>
                             <constraint firstItem="lPr-9p-ExR" firstAttribute="centerX" secondItem="BKf-1o-d7Q" secondAttribute="centerX" id="LMv-h2-Z3m"/>
+                            <constraint firstItem="yNS-EF-ZL4" firstAttribute="top" secondItem="kTF-Zz-FRZ" secondAttribute="bottom" id="UW4-Eq-48P"/>
                             <constraint firstItem="8rf-3P-x3M" firstAttribute="centerX" secondItem="BKf-1o-d7Q" secondAttribute="centerX" id="Web-Uq-cmP"/>
                             <constraint firstItem="tqb-c1-9YO" firstAttribute="top" secondItem="CxC-bn-u0m" secondAttribute="bottom" constant="20" id="eJM-G7-O5h"/>
                             <constraint firstItem="tqb-c1-9YO" firstAttribute="centerX" secondItem="BKf-1o-d7Q" secondAttribute="centerX" id="nIf-8o-rDx"/>
                             <constraint firstItem="buT-NT-2Zw" firstAttribute="top" secondItem="kTF-Zz-FRZ" secondAttribute="bottom" constant="50" id="qfr-rt-qTX"/>
                             <constraint firstItem="buT-NT-2Zw" firstAttribute="centerX" secondItem="BKf-1o-d7Q" secondAttribute="centerX" id="rEc-Mw-JOS"/>
+                            <constraint firstAttribute="trailing" secondItem="yNS-EF-ZL4" secondAttribute="trailing" id="vWJ-z5-IXa"/>
                             <constraint firstItem="CxC-bn-u0m" firstAttribute="centerX" secondItem="BKf-1o-d7Q" secondAttribute="centerX" id="yh9-sZ-4TA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Al7-MT-Z3a"/>
                     <connections>
+                        <outlet property="backgroundImageView" destination="yNS-EF-ZL4" id="ZMD-6Q-IDN"/>
                         <outlet property="emailTextField" destination="CxC-bn-u0m" id="1Ki-Mj-a4f"/>
                         <outlet property="passwordTextField" destination="tqb-c1-9YO" id="gbz-s5-2eQ"/>
                         <segue destination="gdG-cf-F28" kind="show" identifier="SignUpSegue" id="BQB-XW-FxD"/>
@@ -195,7 +201,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6C8-jr-MWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-215" y="-536"/>
+            <point key="canvasLocation" x="-215.19999999999999" y="-536.58170914542734"/>
         </scene>
         <!--Task-->
         <scene sceneID="0wm-1h-XLz">
@@ -578,6 +584,57 @@
             </objects>
             <point key="canvasLocation" x="137" y="1479"/>
         </scene>
+        <!--Change Password-->
+        <scene sceneID="hs1-BH-cIl">
+            <objects>
+                <tableViewController id="lfI-zr-PAv" customClass="ChangePasswordTableViewController" customModule="Booyah" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="g7U-jO-g4g">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="K9R-W7-u5b">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="61H-w6-Keh">
+                                        <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="61H-w6-Keh" id="Y9X-QJ-DjA">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NEx-3u-vUb">
+                                        <rect key="frame" x="0.0" y="108" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NEx-3u-vUb" id="rio-mY-PRM">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="c9r-f1-qnn">
+                                        <rect key="frame" x="0.0" y="152" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c9r-f1-qnn" id="2IU-RE-IRt">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="lfI-zr-PAv" id="Vfr-j2-KWI"/>
+                            <outlet property="delegate" destination="lfI-zr-PAv" id="Fnv-rg-FSe"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Change Password" id="XdP-Pt-omP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="CTD-dk-TLu"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OLq-DW-PFh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2066" y="1511"/>
+        </scene>
         <!--Me-->
         <scene sceneID="eQg-R0-ift">
             <objects>
@@ -643,12 +700,29 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Vy1-Pl-cYJ" style="IBUITableViewCellStyleDefault" id="HTV-tX-geN">
+                                        <rect key="frame" x="0.0" y="302" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HTV-tX-geN" id="B5s-pT-012">
+                                            <frame key="frameInset" width="342" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="My Tasks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vy1-Pl-cYJ">
+                                                    <frame key="frameInset" minX="15" width="325" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle=" " id="Rtt-cH-9vd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ppg-OK-pW7" style="IBUITableViewCellStyleDefault" id="jIf-bL-V2U">
-                                        <rect key="frame" x="0.0" y="330" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="374" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jIf-bL-V2U" id="v8c-la-lna">
                                             <frame key="frameInset" width="342" height="43"/>
@@ -665,7 +739,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="GbU-ST-Lge" style="IBUITableViewCellStyleDefault" id="eOi-eD-6oD">
-                                        <rect key="frame" x="0.0" y="374" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="418" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eOi-eD-6oD" id="QJw-c2-4DU">
                                             <frame key="frameInset" width="375" height="43"/>
@@ -682,7 +756,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="HyT-Mn-vQ7" style="IBUITableViewCellStyleDefault" id="YVu-KN-MWQ">
-                                        <rect key="frame" x="0.0" y="418" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="462" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YVu-KN-MWQ" id="ujf-9l-cWm">
                                             <frame key="frameInset" width="375" height="43"/>
@@ -709,6 +783,8 @@
                     <navigationItem key="navigationItem" title="Me" id="9gg-s3-TY3"/>
                     <connections>
                         <segue destination="8Fq-9H-JHv" kind="showDetail" identifier="LogoutSegue" id="bWx-vQ-v4o"/>
+                        <segue destination="M3p-5b-yLX" kind="show" identifier="ShowMyTaskSegue" id="I9N-9p-E6N"/>
+                        <segue destination="lfI-zr-PAv" kind="show" identifier="ChangePasswordSegue" id="y8z-RF-dKV"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9oO-xB-Rjd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -799,7 +875,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XNd-PB-lIJ" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="EvL-0J-KCk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EvL-0J-KCk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1180106244" green="0.76838596199999998" blue="0.46601344230000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -818,7 +894,8 @@
         <image name="login_background" width="744" height="1392"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Cb1-C7-bI2"/>
-        <segue reference="S7G-l1-ZfS"/>
+        <segue reference="I9N-9p-E6N"/>
+        <segue reference="BQB-XW-FxD"/>
+        <segue reference="hqB-81-viU"/>
     </inferredMetricsTieBreakers>
 </document>

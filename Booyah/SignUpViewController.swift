@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  SignInViewController.swift
 //  Booyah
 //
 //  Created by Paul Zhang on 4/10/2016.
@@ -9,17 +9,16 @@
 import UIKit
 import FirebaseAuth
 
-class LoginViewController: UIViewController {
-
+class SignUpViewController: UIViewController {
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var backgroundImageView: UIImageView!
     
-    
-    
-    @IBAction func SignInButtonTouched(_ sender: UIButton) {
+    @IBAction func SignUpButtonTouched(_ sender: UIButton) {
+        
         guard let email = emailTextField.text, let password = passwordTextField.text else {
-            let alertController = UIAlertController(title: "Oops", message: "Invalid email or password", preferredStyle: UIAlertControllerStyle.alert)
+            let alertController = UIAlertController(title: "Oops", message: "Invalid username or password", preferredStyle: UIAlertControllerStyle.alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: { void in
                 self.emailTextField.becomeFirstResponder()
             })
@@ -27,27 +26,39 @@ class LoginViewController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
             return
         }
-        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+        
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+            
+            var isSuccess = false
+            let alertController: UIAlertController!
             if user != nil && error == nil {
-                self.performSegue(withIdentifier: "LoginSegue", sender: nil)
+                alertController = UIAlertController(title: "Success", message: "Your account has been created", preferredStyle: .alert)
+                isSuccess = true
             } else {
-                let alertController = UIAlertController(title: "Oops", message: "Email or password error", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: { void in
-                    self.passwordTextField.becomeFirstResponder()
-                })
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true, completion: nil)
+                alertController = UIAlertController(title: "Error", message: "User account creation error", preferredStyle: .alert)
             }
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { void in                
+                if isSuccess {
+                    self.performSegue(withIdentifier: "SignUpSegue", sender: nil)
+                } else {
+                    self.emailTextField.becomeFirstResponder()
+                }
+            })
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
         })
     }
-    
+
+    @IBAction func backButtonTouched(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         let blurEffect = UIBlurEffect(style: .light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         blurEffectView.frame = self.view.frame
         backgroundImageView.addSubview(blurEffectView)
     }

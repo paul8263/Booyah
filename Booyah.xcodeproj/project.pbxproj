@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2BC1A4BD1DA35F5200057AB6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4BC1DA35F5200057AB6 /* Task.swift */; };
 		2BC1A4BF1DA360A900057AB6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4BE1DA360A900057AB6 /* LoginViewController.swift */; };
-		2BC1A4C11DA3659800057AB6 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4C01DA3659800057AB6 /* SignInViewController.swift */; };
+		2BC1A4C11DA3659800057AB6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4C01DA3659800057AB6 /* SignUpViewController.swift */; };
 		2BC1A4C31DA368A800057AB6 /* MyInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4C21DA368A800057AB6 /* MyInfoTableViewController.swift */; };
 		2BC1A4C51DA36A2D00057AB6 /* TaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4C41DA36A2D00057AB6 /* TaskTableViewController.swift */; };
 		2BC1A4C71DA36A3900057AB6 /* ChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4C61DA36A3900057AB6 /* ChatTableViewController.swift */; };
@@ -19,6 +19,8 @@
 		2BC1A4CF1DA372BE00057AB6 /* TaskDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4CE1DA372BE00057AB6 /* TaskDetailTableViewController.swift */; };
 		2BC1A50F1DA5C43C00057AB6 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A50E1DA5C43C00057AB6 /* TaskTableViewCell.swift */; };
 		2BC1A5111DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A5101DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift */; };
+		2BC1A5571DA759F900057AB6 /* ChangePasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A5561DA759F900057AB6 /* ChangePasswordTableViewController.swift */; };
+		2BC1A5591DA75BBA00057AB6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2BC1A5581DA75BBA00057AB6 /* GoogleService-Info.plist */; };
 		2BC38E981DA3558500F2AC6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC38E971DA3558500F2AC6A /* AppDelegate.swift */; };
 		2BC38E9D1DA3558500F2AC6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BC38E9B1DA3558500F2AC6A /* Main.storyboard */; };
 		2BC38E9F1DA3558500F2AC6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BC38E9E1DA3558500F2AC6A /* Assets.xcassets */; };
@@ -52,7 +54,7 @@
 		0F5412D21C58AEDD5BA6ABBB /* Pods_Booyah.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Booyah.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BC1A4BC1DA35F5200057AB6 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		2BC1A4BE1DA360A900057AB6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		2BC1A4C01DA3659800057AB6 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		2BC1A4C01DA3659800057AB6 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2BC1A4C21DA368A800057AB6 /* MyInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyInfoTableViewController.swift; sourceTree = "<group>"; };
 		2BC1A4C41DA36A2D00057AB6 /* TaskTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewController.swift; sourceTree = "<group>"; };
 		2BC1A4C61DA36A3900057AB6 /* ChatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,9 @@
 		2BC1A4CE1DA372BE00057AB6 /* TaskDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailTableViewController.swift; sourceTree = "<group>"; };
 		2BC1A50E1DA5C43C00057AB6 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		2BC1A5101DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddModifyTaskTableViewController.swift; sourceTree = "<group>"; };
+		2BC1A5561DA759F900057AB6 /* ChangePasswordTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordTableViewController.swift; sourceTree = "<group>"; };
+		2BC1A5581DA75BBA00057AB6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2BC1A55A1DA7610D00057AB6 /* Booyah.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Booyah.entitlements; sourceTree = "<group>"; };
 		2BC38E941DA3558500F2AC6A /* Booyah.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Booyah.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BC38E971DA3558500F2AC6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BC38E9C1DA3558500F2AC6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -115,7 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				2BC1A4BE1DA360A900057AB6 /* LoginViewController.swift */,
-				2BC1A4C01DA3659800057AB6 /* SignInViewController.swift */,
+				2BC1A4C01DA3659800057AB6 /* SignUpViewController.swift */,
 				2BC1A4C21DA368A800057AB6 /* MyInfoTableViewController.swift */,
 				2BC1A4C41DA36A2D00057AB6 /* TaskTableViewController.swift */,
 				2BC1A4C61DA36A3900057AB6 /* ChatTableViewController.swift */,
@@ -124,6 +129,7 @@
 				2BC1A4CE1DA372BE00057AB6 /* TaskDetailTableViewController.swift */,
 				2BC1A50E1DA5C43C00057AB6 /* TaskTableViewCell.swift */,
 				2BC1A5101DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift */,
+				2BC1A5561DA759F900057AB6 /* ChangePasswordTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -149,6 +155,7 @@
 		2BC1A4B91DA35A0F00057AB6 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				2BC1A5581DA75BBA00057AB6 /* GoogleService-Info.plist */,
 				2BC38E971DA3558500F2AC6A /* AppDelegate.swift */,
 				2BC38E9E1DA3558500F2AC6A /* Assets.xcassets */,
 				2BC38EA31DA3558500F2AC6A /* Info.plist */,
@@ -181,6 +188,7 @@
 		2BC38E961DA3558500F2AC6A /* Booyah */ = {
 			isa = PBXGroup;
 			children = (
+				2BC1A55A1DA7610D00057AB6 /* Booyah.entitlements */,
 				2BC1A4B91DA35A0F00057AB6 /* Others */,
 				2BC1A4B81DA359FE00057AB6 /* Views */,
 				2BC1A4B71DA359F500057AB6 /* Models */,
@@ -309,6 +317,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = V537LP73QG;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					2BC38EA71DA3558500F2AC6A = {
 						CreatedOnToolsVersion = 8.0;
@@ -350,6 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BC38EA21DA3558500F2AC6A /* LaunchScreen.storyboard in Resources */,
+				2BC1A5591DA75BBA00057AB6 /* GoogleService-Info.plist in Resources */,
 				2BC38E9F1DA3558500F2AC6A /* Assets.xcassets in Resources */,
 				2BC38E9D1DA3558500F2AC6A /* Main.storyboard in Resources */,
 			);
@@ -516,10 +530,11 @@
 			files = (
 				2BC1A4C51DA36A2D00057AB6 /* TaskTableViewController.swift in Sources */,
 				2BC1A4CB1DA36B2700057AB6 /* TutorialPageViewController.swift in Sources */,
-				2BC1A4C11DA3659800057AB6 /* SignInViewController.swift in Sources */,
+				2BC1A4C11DA3659800057AB6 /* SignUpViewController.swift in Sources */,
 				2BC1A4C31DA368A800057AB6 /* MyInfoTableViewController.swift in Sources */,
 				2BC1A4CF1DA372BE00057AB6 /* TaskDetailTableViewController.swift in Sources */,
 				2BC1A4C91DA36A8E00057AB6 /* ChatRoomViewController.swift in Sources */,
+				2BC1A5571DA759F900057AB6 /* ChangePasswordTableViewController.swift in Sources */,
 				2BC1A5111DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift in Sources */,
 				2BC1A4BF1DA360A900057AB6 /* LoginViewController.swift in Sources */,
 				2BC1A4BD1DA35F5200057AB6 /* Task.swift in Sources */,
@@ -679,6 +694,7 @@
 			baseConfigurationReference = 553879CC030EF606F81F70C4 /* Pods-Booyah.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Booyah/Booyah.entitlements;
 				DEVELOPMENT_TEAM = V537LP73QG;
 				INFOPLIST_FILE = Booyah/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
@@ -694,6 +710,7 @@
 			baseConfigurationReference = 58F566CE3C0B50562B1CF6D4 /* Pods-Booyah.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Booyah/Booyah.entitlements;
 				DEVELOPMENT_TEAM = V537LP73QG;
 				INFOPLIST_FILE = Booyah/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
