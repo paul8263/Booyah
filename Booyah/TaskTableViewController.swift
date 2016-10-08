@@ -8,23 +8,56 @@
 
 import UIKit
 import FirebaseDatabase
+import FirebaseAuth
 
 class TaskTableViewController: UITableViewController {
     
     var ref = FIRDatabase.database().reference(withPath: "tasks")
     
-    var taskList = [Task]()
+    let currentUser = FIRAuth.auth()?.currentUser
     
+    var taskList = [Task]()
     var filteredTaskList = [Task]()
+    
+    var isShowingTasksForCurrentUserOnly = false
     
     var searchController: UISearchController!
     
-    private func loadTasks() {
-        taskList += [
-            Task(title: "Task 1", description: "Get the Vinegar for me at New Ren Ren Supermarket", date: Date() - TimeInterval(86400.0), userId: "", address: "Sydney", latitude: 0.0, longitude: 0.0),
-            Task(title: "Task 2", description: "Finish the accounting final exam", date: Date(), userId: "", address: "Melbourne", latitude: 0.0, longitude: 0.0),
-            Task(title: "Task 3", description: "Pick up my friend", date: Date(), userId: "", address: "Adelaide", latitude: 0.0, longitude: 0.0),
-        ]
+    
+    func loadTasks() {
+        if isShowingTasksForCurrentUserOnly {
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                var newTaskList = [Task]()
+                for taskSnapshot in snapshot.children {
+                    let task = Task(snapshot: taskSnapshot as! FIRDataSnapshot)
+                    if task.userId == self.currentUser!.uid {
+                        newTaskList.append(task)
+                    }
+                }
+                self.taskList = newTaskList
+                self.tableView.reloadData()
+                if self.refreshControl!.isRefreshing {
+                    self.refreshControl!.endRefreshing()
+                }
+            })
+        } else {
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                var newTaskList = [Task]()
+                for task in snapshot.children {
+                    newTaskList.append(Task(snapshot: task as! FIRDataSnapshot))
+                }
+                self.taskList = newTaskList
+                self.tableView.reloadData()
+                if self.refreshControl!.isRefreshing {
+                    self.refreshControl!.endRefreshing()
+                }
+            })
+        }
+
+    }
+    
+    private func isLoggedIn() -> Bool {
+        return self.currentUser != nil
     }
     
     private func setUpSearchBar() {
@@ -40,7 +73,6 @@ class TaskTableViewController: UITableViewController {
         searchBar.sizeToFit()
 //        searchBar.barTintColor = UIColor(red:0.95, green:0.95, blue:0.96, alpha:1.00)
         tableView.tableHeaderView = searchBar
-        
     }
     
     private func setUpTableView() {
@@ -48,6 +80,13 @@ class TaskTableViewController: UITableViewController {
         self.tableView.rowHeight = 100
         self.tableView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.96, alpha:1.00)
     }
+    
+    private func setRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(TaskTableViewController.loadTasks), for: UIControlEvents.valueChanged)
+        tableView.addSubview(self.refreshControl!)
+    }
+    
     
     func filterTask(keyword: String) {
         self.filteredTaskList = taskList.filter({ (task) -> Bool in
@@ -73,12 +112,16 @@ class TaskTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        setUpSearchBar()
-        setUpTableView()
-        loadTasks()
+        if isLoggedIn() {
+            setUpSearchBar()
+            setUpTableView()
+            loadTasks()
+        } else {
+            print("User is not logged in")
+        }
+        setRefreshControl()
     }
     
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

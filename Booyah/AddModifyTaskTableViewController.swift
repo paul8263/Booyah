@@ -36,23 +36,36 @@ class AddModifyTaskTableViewController: UITableViewController {
     private func addNewTaskToFirebase() {
         if isLoggedIn() {
             let taskRef = taskBaseRef.childByAutoId()
-            let task: [String: Any] = [
+            let taskData: [String: Any] = [
                 "title": self.titleTextField.text!,
-                "dscription": self.descriptionTextView.text!,
+                "description": self.descriptionTextView.text!,
                 "address": self.addressTextField.text!,
                 "timestamp": self.taskDatePicker.date.timeIntervalSince1970,
                 "userId": currentUser!.uid
             ]
             
-            taskRef.setValue(task)
+            taskRef.setValue(taskData)
             let taskId = taskRef.key
             let userTaskRef = userBaseRef.child(currentUser!.uid).child("tasks").child(taskId)
             userTaskRef.setValue(true)
+        } else {
+            print("User is not logged in")
         }
     }
     
     private func updateTaskInFirebase() {
-//        Todo
+        if isLoggedIn() {
+            let taskvalue: [String: Any] = [
+                "title": self.titleTextField.text!,
+                "description": self.descriptionTextView.text!,
+                "address": self.addressTextField.text!,
+                "timestamp": self.taskDatePicker.date.timeIntervalSince1970,
+                "userId": currentUser!.uid
+            ]
+            task?.ref?.setValue(taskvalue)
+        } else {
+            print("User is not logged in")
+        }
     }
     
     private func isValidate() -> Bool {

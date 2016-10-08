@@ -10,6 +10,7 @@ import Foundation
 import FirebaseDatabase
 
 class Task {
+    var taskId: String
     var title: String
     var description: String
     var date: Date
@@ -21,7 +22,8 @@ class Task {
     
     
     
-    init(title: String = "", description: String = "", date: Date = Date(), userId: String = "", address: String = "", latitude: Double = 0.0, longitude: Double = 0.0) {
+    init(taskId: String = "", title: String = "", description: String = "", date: Date = Date(), userId: String = "", address: String = "", latitude: Double = 0.0, longitude: Double = 0.0) {
+        self.taskId = taskId
         self.title = title
         self.description = description
         self.date = date
@@ -32,6 +34,43 @@ class Task {
         self.ref = nil
     }
     init(snapshot: FIRDataSnapshot) {
-        
+        self.taskId = snapshot.key
+        let snapshotValue = snapshot.value as! [String: Any]
+        if let title = snapshotValue["title"] as? String {
+            self.title = title
+        } else {
+            self.title = ""
+        }
+        if let description = snapshotValue["description"] as? String {
+            self.description = description
+        } else {
+            self.description = ""
+        }
+        if let timestamp = snapshotValue["timestamp"] as? TimeInterval {
+            self.date = Date(timeIntervalSince1970: timestamp)
+        } else {
+            self.date = Date()
+        }
+        if let userId = snapshotValue["userId"] as? String {
+            self.userId = userId
+        } else {
+            self.userId = ""
+        }
+        if let address = snapshotValue["address"] as? String {
+            self.address = address
+        } else {
+            self.address = ""
+        }
+        if let latitude = snapshotValue["latitude"] as? Double {
+            self.latitude = latitude
+        } else {
+            self.latitude = 0.0
+        }
+        if let longitude = snapshotValue["longitude"] as? Double {
+            self.longitude = longitude
+        } else {
+            self.longitude = 0.0
+        }
+        self.ref = snapshot.ref
     }
 }
