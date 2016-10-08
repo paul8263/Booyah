@@ -7,13 +7,32 @@
 //
 
 import Foundation
+import FirebaseDatabase
 
 class User {
     var userId: String
     var displayName: String
+    var email: String
+    var ref: FIRDatabaseReference?
     
-    init(userId: String, displayName: String) {
+    init(userId: String, displayName: String = "", email: String = "") {
         self.userId = userId
         self.displayName = displayName
+        self.email = email
+    }
+    init(snapshot: FIRDataSnapshot) {
+        let snapshotValue = snapshot.value as! [String: Any]
+        self.userId = snapshot.key
+        if let displayName = snapshotValue["displayName"] as? String {
+            self.displayName = displayName
+        } else {
+            self.displayName = ""
+        }
+        if let email = snapshotValue["email"] as? String {
+            self.email = email
+        } else {
+            self.email = ""
+        }
+        self.ref = snapshot.ref
     }
 }

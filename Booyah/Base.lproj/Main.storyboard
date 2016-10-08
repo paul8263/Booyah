@@ -593,30 +593,67 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
-                            <tableViewSection id="K9R-W7-u5b">
+                            <tableViewSection headerTitle=" " id="K9R-W7-u5b">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="61H-w6-Keh">
-                                        <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="xay-ef-YFf" style="IBUITableViewCellStyleDefault" id="61H-w6-Keh">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="61H-w6-Keh" id="Y9X-QJ-DjA">
                                             <frame key="frameInset" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xay-ef-YFf">
+                                                    <frame key="frameInset" minX="15" width="345" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NEx-3u-vUb">
-                                        <rect key="frame" x="0.0" y="108" width="375" height="44"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle=" " id="3xX-Wl-wbP">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SZs-u7-vph">
+                                        <rect key="frame" x="0.0" y="164" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NEx-3u-vUb" id="rio-mY-PRM">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SZs-u7-vph" id="1s5-1n-bd3">
                                             <frame key="frameInset" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Old Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xdp-CI-2bz">
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xdp-CI-2bz" firstAttribute="leading" secondItem="1s5-1n-bd3" secondAttribute="leading" constant="10" id="ABC-bc-cue"/>
+                                                <constraint firstItem="xdp-CI-2bz" firstAttribute="centerY" secondItem="1s5-1n-bd3" secondAttribute="centerY" id="gdf-z0-aG6"/>
+                                                <constraint firstAttribute="trailing" secondItem="xdp-CI-2bz" secondAttribute="trailing" constant="10" id="yhD-Se-Amv"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="c9r-f1-qnn">
-                                        <rect key="frame" x="0.0" y="152" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="P06-Ku-jVI">
+                                        <rect key="frame" x="0.0" y="208" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c9r-f1-qnn" id="2IU-RE-IRt">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="P06-Ku-jVI" id="6zN-wv-mBS">
                                             <frame key="frameInset" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VJo-xq-5me">
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="VJo-xq-5me" firstAttribute="centerY" secondItem="6zN-wv-mBS" secondAttribute="centerY" id="Bt4-hs-ZKd"/>
+                                                <constraint firstAttribute="trailing" secondItem="VJo-xq-5me" secondAttribute="trailing" constant="10" id="kJ4-WM-M97"/>
+                                                <constraint firstItem="VJo-xq-5me" firstAttribute="leading" secondItem="6zN-wv-mBS" secondAttribute="leading" constant="10" id="wG7-9x-CJf"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -628,8 +665,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Change Password" id="XdP-Pt-omP">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="CTD-dk-TLu"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="CTD-dk-TLu">
+                            <connections>
+                                <action selector="doneButtonTouched:" destination="lfI-zr-PAv" id="ZE7-Au-ghl"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="emailCell" destination="61H-w6-Keh" id="04L-mY-UgS"/>
+                        <outlet property="newPasswordTextField" destination="VJo-xq-5me" id="UOi-bF-Xfb"/>
+                        <outlet property="oldPasswordTextField" destination="xdp-CI-2bz" id="Rc9-cJ-67R"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OLq-DW-PFh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

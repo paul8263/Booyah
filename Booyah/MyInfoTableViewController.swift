@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MyInfoTableViewController: UITableViewController {
+    
+    var currentUser: FIRUser?
+    
+    private func loadUser() {
+        currentUser = FIRAuth.auth()?.currentUser
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +25,7 @@ class MyInfoTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        loadUser()
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,7 +38,11 @@ class MyInfoTableViewController: UITableViewController {
     }
     
     private func logOut() {
-//        Log out on Firebase
+        do {
+            try FIRAuth.auth()?.signOut()
+        } catch {
+            print("########Sign out error")
+        }
         performSegue(withIdentifier: "LogoutSegue", sender: nil)
     }
     

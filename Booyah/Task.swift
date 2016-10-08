@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseDatabase
 
 class Task {
     var title: String
@@ -16,6 +17,7 @@ class Task {
     var address: String
     var latitude: Double
     var longitude: Double
+    var ref: FIRDatabaseReference?
     
     
     
@@ -27,5 +29,9 @@ class Task {
         self.address = address
         self.latitude = latitude
         self.longitude = longitude
+        self.ref = nil
+    }
+    init(snapshot: FIRDataSnapshot) {
+        
     }
 }

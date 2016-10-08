@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseAuth
 
 class AddModifyTaskTableViewController: UITableViewController {
+    
+    let taskBaseRef = FIRDatabase.database().reference(withPath: "tasks")
+    let userBaseRef = FIRDatabase.database().reference(withPath: "users")
+    var currentUser = FIRAuth.auth()?.currentUser
     
     var isAddingTask = false
     var task: Task?
@@ -23,22 +29,48 @@ class AddModifyTaskTableViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    private func isLoggedIn() -> Bool {
+        return self.currentUser != nil
+    }
+    
     private func addNewTaskToFirebase() {
-//        Todo
+        if isLoggedIn() {
+            let taskRef = taskBaseRef.childByAutoId()
+            let task: [String: Any] = [
+                "title": self.titleTextField.text!,
+                "dscription": self.descriptionTextView.text!,
+                "address": self.addressTextField.text!,
+                "timestamp": self.taskDatePicker.date.timeIntervalSince1970,
+                "userId": currentUser!.uid
+            ]
+            
+            taskRef.setValue(task)
+            let taskId = taskRef.key
+            let userTaskRef = userBaseRef.child(currentUser!.uid).child("tasks").child(taskId)
+            userTaskRef.setValue(true)
+        }
     }
     
     private func updateTaskInFirebase() {
 //        Todo
     }
     
+    private func isValidate() -> Bool {
+//        Todo
+        return true
+    }
     
     @IBAction func doneButtonTouched(_ sender: UIBarButtonItem) {
-        if isAddingTask {
-            addNewTaskToFirebase()
+        if isValidate() {
+            if isAddingTask {
+                addNewTaskToFirebase()
+            } else {
+                updateTaskInFirebase()
+            }
+            dismiss(animated: true, completion: nil)
         } else {
-            updateTaskInFirebase()
+            
         }
-        dismiss(animated: true, completion: nil)
     }
     
     private func loadTask() {
