@@ -39,13 +39,6 @@ class ChatGroup {
                     let snapValue = snap.value as! [String: Any]
                     let result = snapValue["email"] as! String
                     completionHandler(result)
-//                    for snap in snapshot.children {
-//                        let snap = snap as! FIRDataSnapshot
-//                        let snapValue = snap.value as! [String: Any]
-//                        let result = snapValue["email"] as! String
-//                        completionHandler(result)
-//                        return
-//                    }
                 })
             }
         }

@@ -31,9 +31,8 @@ class ChatTableViewController: UITableViewController {
     
     private func loadChatGroups() {
         self.chatGroupList.removeAll()
-        usersRef.queryOrderedByKey().queryEqual(toValue: currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            let userSnapshot = snapshot.children.allObjects[0] as! FIRDataSnapshot
-            let user = User(snapshot: userSnapshot)
+        usersRef.child(currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            let user = User(snapshot: snapshot)
             if let groups = user.chatGroups {
                 for chatgroupId in groups {
                     self.chatGroupsRef.child(chatgroupId).observeSingleEvent(of: .value, with: { (snapshot) in

@@ -44,19 +44,6 @@ class ChatRoomViewController: JSQMessagesViewController {
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
     }
-    
-//    private func loadChatGroup() {
-//        chatGroupRef.queryOrderedByKey().queryEqual(toValue: chatGroupId!).observeSingleEvent(of: .value, with: { (snapshot) in
-//            if snapshot.childrenCount > 1 {
-//                fatalError("Duplicated chat group with same ID")
-//            }
-//            let snap = snapshot.children.allObjects[0] as! FIRDataSnapshot
-//            self.chatGroup = ChatGroup(snapshot: snap)
-//            self.chatGroup?.getGroupDisplayName(currentUser: self.currentUser!, completionHandler: { (name) in
-//                self.navigationItem.title =  name
-//            })
-//        })
-//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,9 +55,7 @@ class ChatRoomViewController: JSQMessagesViewController {
             self.navigationItem.title =  name
         })
         setUpAvatar()
-//        loadChatGroup()
         tabBarController?.tabBar.isHidden = true
-//        navigationItem.title = senderDisplayName
     }
 
     override func didReceiveMemoryWarning() {
@@ -134,15 +119,4 @@ class ChatRoomViewController: JSQMessagesViewController {
     override func didPressAccessoryButton(_ sender: UIButton!) {
         
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

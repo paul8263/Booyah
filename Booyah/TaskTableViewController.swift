@@ -50,7 +50,6 @@ class TaskTableViewController: UITableViewController {
                 }
             })
         }
-
     }
     
     private func isLoggedIn() -> Bool {
@@ -152,14 +151,12 @@ class TaskTableViewController: UITableViewController {
         } else {
             loadTaskToCell(task: taskList[indexPath.row], taskTableViewCell: cell)
         }
-        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         performSegue(withIdentifier: "TaskDetailSegue", sender: indexPath)
-//        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     /*
@@ -202,8 +199,6 @@ class TaskTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "TaskDetailSegue" {
             let taskDetailTableViewController = segue.destination as! TaskDetailTableViewController
             let indexPath = sender as! IndexPath
@@ -212,7 +207,6 @@ class TaskTableViewController: UITableViewController {
             } else {
                 taskDetailTableViewController.task = self.taskList[indexPath.row]
             }
-            
         } else if segue.identifier == "AddTaskSegue" {
             let navigationController = segue.destination as! UINavigationController
             let addModifyTaskTableViewController = navigationController.viewControllers.first as! AddModifyTaskTableViewController
@@ -220,8 +214,6 @@ class TaskTableViewController: UITableViewController {
             addModifyTaskTableViewController.task = nil
         }
     }
-    
-
 }
 
 extension TaskTableViewController: UISearchResultsUpdating {
