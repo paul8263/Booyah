@@ -15,8 +15,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var backgroundImageView: UIImageView!
     
-    
-    
     @IBAction func SignInButtonTouched(_ sender: UIButton) {
         guard let email = emailTextField.text, let password = passwordTextField.text else {
             let alertController = UIAlertController(title: "Oops", message: "Invalid email or password", preferredStyle: UIAlertControllerStyle.alert)
@@ -47,7 +45,6 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         let blurEffect = UIBlurEffect(style: .light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         blurEffectView.frame = self.view.frame
         backgroundImageView.addSubview(blurEffectView)
     }
@@ -57,7 +54,6 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     /*
     // MARK: - Navigation
 

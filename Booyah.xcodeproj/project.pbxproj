@@ -21,6 +21,7 @@
 		2BC1A5111DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A5101DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift */; };
 		2BC1A5571DA759F900057AB6 /* ChangePasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A5561DA759F900057AB6 /* ChangePasswordTableViewController.swift */; };
 		2BC1A5591DA75BBA00057AB6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2BC1A5581DA75BBA00057AB6 /* GoogleService-Info.plist */; };
+		2BC1A55C1DA8DFE200057AB6 /* ChatGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A55B1DA8DFE200057AB6 /* ChatGroup.swift */; };
 		2BC38E981DA3558500F2AC6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC38E971DA3558500F2AC6A /* AppDelegate.swift */; };
 		2BC38E9D1DA3558500F2AC6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BC38E9B1DA3558500F2AC6A /* Main.storyboard */; };
 		2BC38E9F1DA3558500F2AC6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BC38E9E1DA3558500F2AC6A /* Assets.xcassets */; };
@@ -67,6 +68,7 @@
 		2BC1A5561DA759F900057AB6 /* ChangePasswordTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordTableViewController.swift; sourceTree = "<group>"; };
 		2BC1A5581DA75BBA00057AB6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2BC1A55A1DA7610D00057AB6 /* Booyah.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Booyah.entitlements; sourceTree = "<group>"; };
+		2BC1A55B1DA8DFE200057AB6 /* ChatGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroup.swift; sourceTree = "<group>"; };
 		2BC38E941DA3558500F2AC6A /* Booyah.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Booyah.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BC38E971DA3558500F2AC6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BC38E9C1DA3558500F2AC6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			children = (
 				2BC1A4BC1DA35F5200057AB6 /* Task.swift */,
 				2BC1A4CC1DA36E1400057AB6 /* User.swift */,
+				2BC1A55B1DA8DFE200057AB6 /* ChatGroup.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				2BC1A4C91DA36A8E00057AB6 /* ChatRoomViewController.swift in Sources */,
 				2BC1A5571DA759F900057AB6 /* ChangePasswordTableViewController.swift in Sources */,
 				2BC1A5111DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift in Sources */,
+				2BC1A55C1DA8DFE200057AB6 /* ChatGroup.swift in Sources */,
 				2BC1A4BF1DA360A900057AB6 /* LoginViewController.swift in Sources */,
 				2BC1A4BD1DA35F5200057AB6 /* Task.swift in Sources */,
 				2BC1A50F1DA5C43C00057AB6 /* TaskTableViewCell.swift in Sources */,

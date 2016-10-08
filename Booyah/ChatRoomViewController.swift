@@ -8,10 +8,18 @@
 
 import UIKit
 import JSQMessagesViewController
+import FirebaseDatabase
+import FirebaseAuth
 
 class ChatRoomViewController: JSQMessagesViewController {
-    
+//    Will be removed
     var chattingWithUser: User!
+    
+    let currentUser = FIRAuth.auth()?.currentUser
+    let chatGroupRef = FIRDatabase.database().reference(withPath: "chatGroups")
+    let messagesRef = FIRDatabase.database().reference(withPath: "messages")
+    var chatGroupId: String?
+    var chatGroup: ChatGroup?
     
     var messageList = [JSQMessage]()
     
@@ -36,6 +44,19 @@ class ChatRoomViewController: JSQMessagesViewController {
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
     }
+    
+//    private func loadChatGroup() {
+//        chatGroupRef.queryOrderedByKey().queryEqual(toValue: chatGroupId!).observeSingleEvent(of: .value, with: { (snapshot) in
+//            if snapshot.childrenCount > 1 {
+//                fatalError("Duplicated chat group with same ID")
+//            }
+//            let snap = snapshot.children.allObjects[0] as! FIRDataSnapshot
+//            self.chatGroup = ChatGroup(snapshot: snap)
+//            self.chatGroup?.getGroupDisplayName(currentUser: self.currentUser!, completionHandler: { (name) in
+//                self.navigationItem.title =  name
+//            })
+//        })
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,18 +64,18 @@ class ChatRoomViewController: JSQMessagesViewController {
         // Do any additional setup after loading the view.
         loadMessages()
         setUpBubbles()
+        self.chatGroup?.getGroupDisplayName(currentUser: self.currentUser!, completionHandler: { (name) in
+            self.navigationItem.title =  name
+        })
         setUpAvatar()
+//        loadChatGroup()
+        tabBarController?.tabBar.isHidden = true
+//        navigationItem.title = senderDisplayName
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = true
-        navigationItem.title = chattingWithUser.displayName
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {

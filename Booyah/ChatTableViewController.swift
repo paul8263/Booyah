@@ -7,16 +7,43 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseAuth
 
 class ChatTableViewController: UITableViewController {
     
+    let currentUser = FIRAuth.auth()?.currentUser
+    let usersRef = FIRDatabase.database().reference(withPath: "users")
+    let chatGroupsRef = FIRDatabase.database().reference(withPath: "chatGroups")
+    
+//    Will be removed
     var userList = [User]()
     
+    var chatGroupList = [ChatGroup]()
+    
+//    Will be removed
     private func loadUsers() {
         userList += [
             User(userId: "0", displayName: "Paul"),
             User(userId: "1", displayName: "Kate"),
         ]
+    }
+    
+    private func loadChatGroups() {
+        self.chatGroupList.removeAll()
+        usersRef.queryOrderedByKey().queryEqual(toValue: currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            let userSnapshot = snapshot.children.allObjects[0] as! FIRDataSnapshot
+            let user = User(snapshot: userSnapshot)
+            if let groups = user.chatGroups {
+                for chatgroupId in groups {
+                    self.chatGroupsRef.child(chatgroupId).observeSingleEvent(of: .value, with: { (snapshot) in
+                        let chatGroup = ChatGroup(snapshot: snapshot)
+                        self.chatGroupList.append(chatGroup)
+                        self.tableView.reloadData()
+                    })
+                }
+            }
+        })
     }
 
     override func viewDidLoad() {
@@ -28,7 +55,8 @@ class ChatTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        loadUsers()
+//        loadUsers()
+        loadChatGroups()
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,22 +72,17 @@ class ChatTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return userList.count
+        return self.chatGroupList.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell", for: indexPath)
-        
-        // Configure the cell...
-
-        cell.textLabel?.text = userList[indexPath.row].displayName
+        cell.textLabel?.text = chatGroupList[indexPath.row].groupName
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
@@ -78,32 +101,11 @@ class ChatTableViewController: UITableViewController {
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            userList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-//        else if editingStyle == .insert {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//        }    
+//        if editingStyle == .delete {
+//            userList.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        }
     }
-    
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
@@ -114,10 +116,11 @@ class ChatTableViewController: UITableViewController {
         if segue.identifier == "ChatRoomSegue" {
             let indexPath = sender as! IndexPath
             let chatRoomViewController = segue.destination as! ChatRoomViewController
-            chatRoomViewController.chattingWithUser = userList[indexPath.row]
+//            chatRoomViewController.chattingWithUser = chatGroupList[indexPath.row]
+            chatRoomViewController.chatGroup = chatGroupList[indexPath.row]
 //            Todo
-            chatRoomViewController.senderId = "FakedSenderId"
-            chatRoomViewController.senderDisplayName = ""
+            chatRoomViewController.senderId = currentUser!.uid
+            chatRoomViewController.senderDisplayName = currentUser!.email!
         }
     }
     

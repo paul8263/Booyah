@@ -20,8 +20,6 @@ class Task {
     var longitude: Double
     var ref: FIRDatabaseReference?
     
-    
-    
     init(taskId: String = "", title: String = "", description: String = "", date: Date = Date(), userId: String = "", address: String = "", latitude: Double = 0.0, longitude: Double = 0.0) {
         self.taskId = taskId
         self.title = title
@@ -33,6 +31,7 @@ class Task {
         self.longitude = longitude
         self.ref = nil
     }
+    
     init(snapshot: FIRDataSnapshot) {
         self.taskId = snapshot.key
         let snapshotValue = snapshot.value as! [String: Any]

@@ -7,25 +7,83 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseAuth
 
 class TaskDetailTableViewController: UITableViewController {
     
     var task: Task!
-//    Wait to be implemented
-    var canModifyTask: Bool = false
+    let currentUser = FIRAuth.auth()?.currentUser
+    let chatGroupsRef = FIRDatabase.database().reference(withPath: "chatGroups")
+    let usersRef = FIRDatabase.database().reference(withPath: "users")
     
     @IBOutlet weak var titleCell: UITableViewCell!
     @IBOutlet weak var descriptionCell: UITableViewCell!
     @IBOutlet weak var addressCell: UITableViewCell!
     @IBOutlet weak var dateCell: UITableViewCell!
+    @IBOutlet weak var modifyButton: UIBarButtonItem!
+    @IBOutlet weak var startChatButton: UIButton!
     
     
+    private func startChat() {
+        var currentUserChatGroups = [String]()
+        var otherUserChatGroups = [String]()
+        usersRef.child(currentUser!.uid).child("chatGroups").observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.value is NSNull {
+                self.createNewChatGroup()
+            } else {
+                let currentUserSnapshotValue = snapshot.value as! [String: Any]
+                self.usersRef.child(self.task.userId).child("chatGroups").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if snapshot.value is NSNull {
+                        self.createNewChatGroup()
+                    } else {
+                        let otherUserSnapshotValue = snapshot.value as! [String: Any]
+                        for (key, _) in currentUserSnapshotValue {
+                            currentUserChatGroups.append(key)
+                        }
+                        for (key, _) in otherUserSnapshotValue {
+                            otherUserChatGroups.append(key)
+                        }
+                        for i in currentUserChatGroups {
+                            for j in otherUserChatGroups {
+                                if i == j {
+                                    self.performSegue(withIdentifier: "StartChatSegue", sender: i)
+                                    return
+                                }
+                            }
+                        }
+                        self.createNewChatGroup()
+                    }
+                })
+            }
+        })
+    }
     
+    private func createNewChatGroup() {
+        let newChatGroupRef = self.chatGroupsRef.childByAutoId()
+        let newChatGroupData: [String: Any] = [
+            "isActive": true,
+            "groupName": task.title,
+            "users": [
+                self.currentUser!.uid: true,
+                self.task.userId: true
+            ]
+        ]
+        newChatGroupRef.setValue(newChatGroupData)
+        let newChatGroupId = newChatGroupRef.key
+        self.usersRef.child(self.currentUser!.uid).child("chatGroups").setValue([newChatGroupId: true])
+        self.usersRef.child(self.task.userId).child("chatGroups").setValue([newChatGroupId: true])
+        self.performSegue(withIdentifier: "StartChatSegue", sender: newChatGroupId)
+    }
+    
+    @IBAction func chatButtonTouched(_ sender: UIButton) {
+        startChat()
+    }
+        
     @IBAction func modifyButtonTouched(_ sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "ModifyTaskSegue", sender: nil)
     }
     
-
     private func setUpTableView() {
         self.tableView.estimatedRowHeight = 44
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -60,6 +118,11 @@ class TaskDetailTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        if task.userId != currentUser!.uid {
+            modifyButton.isEnabled = false
+        } else {
+            startChatButton.isEnabled = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,80 +135,20 @@ class TaskDetailTableViewController: UITableViewController {
         navigationItem.title = task.title
         loadDataToCell()
     }
-    
-
-    // MARK: - Table view data source
-
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//        return 0
-//    }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    
-    // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "ModifyTaskSegue" {
             let navigationController = segue.destination as! UINavigationController
             let addModifyTaskTableViewController = navigationController.viewControllers.first as! AddModifyTaskTableViewController
             addModifyTaskTableViewController.isAddingTask = false
             addModifyTaskTableViewController.task = task
+        } else if segue.identifier == "StartChatSegue" {
+            let chatRoomViewController = segue.destination as! ChatRoomViewController
+            chatRoomViewController.chatGroupId = (sender as! String)
+            chatRoomViewController.senderId = self.currentUser!.uid
+//            Will change it to display name later
+            chatRoomViewController.senderDisplayName = currentUser!.email
         }
-        
     }
-    
-
 }

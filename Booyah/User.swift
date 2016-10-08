@@ -13,6 +13,7 @@ class User {
     var userId: String
     var displayName: String
     var email: String
+    var chatGroups: [String]?
     var ref: FIRDatabaseReference?
     
     init(userId: String, displayName: String = "", email: String = "") {
@@ -20,6 +21,7 @@ class User {
         self.displayName = displayName
         self.email = email
     }
+    
     init(snapshot: FIRDataSnapshot) {
         let snapshotValue = snapshot.value as! [String: Any]
         self.userId = snapshot.key
@@ -34,5 +36,16 @@ class User {
             self.email = ""
         }
         self.ref = snapshot.ref
+        if snapshotValue["chatGroups"] is NSNull {
+            self.chatGroups = []
+        } else {
+            var newChatGroups = [String]()
+            let chatGroupsDict = snapshotValue["chatGroups"] as! [String: Any]
+            for (key, _) in chatGroupsDict {
+                newChatGroups.append(key)
+            }
+            self.chatGroups = newChatGroups
+        }
+        
     }
 }

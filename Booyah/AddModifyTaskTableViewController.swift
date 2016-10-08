@@ -43,8 +43,8 @@ class AddModifyTaskTableViewController: UITableViewController {
                 "timestamp": self.taskDatePicker.date.timeIntervalSince1970,
                 "userId": currentUser!.uid
             ]
-            
             taskRef.setValue(taskData)
+            
             let taskId = taskRef.key
             let userTaskRef = userBaseRef.child(currentUser!.uid).child("tasks").child(taskId)
             userTaskRef.setValue(true)

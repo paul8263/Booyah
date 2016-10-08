@@ -13,16 +13,13 @@ import FirebaseAuth
 class TaskTableViewController: UITableViewController {
     
     var ref = FIRDatabase.database().reference(withPath: "tasks")
-    
     let currentUser = FIRAuth.auth()?.currentUser
-    
     var taskList = [Task]()
     var filteredTaskList = [Task]()
     
     var isShowingTasksForCurrentUserOnly = false
     
     var searchController: UISearchController!
-    
     
     func loadTasks() {
         if isShowingTasksForCurrentUserOnly {
@@ -87,7 +84,6 @@ class TaskTableViewController: UITableViewController {
         tableView.addSubview(self.refreshControl!)
     }
     
-    
     func filterTask(keyword: String) {
         self.filteredTaskList = taskList.filter({ (task) -> Bool in
 //            Will Change it to postion later
@@ -103,7 +99,6 @@ class TaskTableViewController: UITableViewController {
         performSegue(withIdentifier: "AddTaskSegue", sender: nil)
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -148,7 +143,6 @@ class TaskTableViewController: UITableViewController {
         taskTableViewCell.taskAddressLabel.text = task.address
 //        Image view will be done later
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell", for: indexPath) as! TaskTableViewCell

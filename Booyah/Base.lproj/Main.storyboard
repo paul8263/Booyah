@@ -539,6 +539,35 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle=" " id="13F-ex-vYv">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Lxx-F3-d6t">
+                                        <rect key="frame" x="0.0" y="380" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lxx-F3-d6t" id="7GB-BN-Fap">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="103-BR-ygt">
+                                                    <color key="backgroundColor" red="1" green="0.47346528729999998" blue="0.39824568249999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="OzB-TJ-7Pf"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Chat with him/her"/>
+                                                    <connections>
+                                                        <action selector="chatButtonTouched:" destination="2jj-R2-QVh" eventType="touchUpInside" id="T4I-O3-Wyu"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="103-BR-ygt" secondAttribute="trailing" constant="40" id="5E7-Jd-c2X"/>
+                                                <constraint firstItem="103-BR-ygt" firstAttribute="centerY" secondItem="7GB-BN-Fap" secondAttribute="centerY" id="tcW-al-QUC"/>
+                                                <constraint firstItem="103-BR-ygt" firstAttribute="leading" secondItem="7GB-BN-Fap" secondAttribute="leading" constant="40" id="uI4-1j-kXs"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="2jj-R2-QVh" id="qv4-2B-IPb"/>
@@ -556,8 +585,11 @@
                         <outlet property="addressCell" destination="7hF-Qt-an9" id="Itd-9U-oaV"/>
                         <outlet property="dateCell" destination="z5x-OY-1cA" id="EEg-Av-hPK"/>
                         <outlet property="descriptionCell" destination="cen-mz-5eh" id="Jxl-BQ-dVw"/>
+                        <outlet property="modifyButton" destination="dHg-fj-haj" id="pha-wN-hXc"/>
+                        <outlet property="startChatButton" destination="103-BR-ygt" id="RdB-Wt-6f9"/>
                         <outlet property="titleCell" destination="esL-Mo-X6x" id="q6A-MZ-kcW"/>
                         <segue destination="XNd-PB-lIJ" kind="presentation" identifier="ModifyTaskSegue" id="S7G-l1-ZfS"/>
+                        <segue destination="i5j-6L-za0" kind="show" identifier="StartChatSegue" id="FcN-pS-sXD"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ks7-Ux-llW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -942,6 +974,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="I9N-9p-E6N"/>
         <segue reference="BQB-XW-FxD"/>
-        <segue reference="hqB-81-viU"/>
+        <segue reference="S7G-l1-ZfS"/>
+        <segue reference="FcN-pS-sXD"/>
     </inferredMetricsTieBreakers>
 </document>
