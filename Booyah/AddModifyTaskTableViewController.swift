@@ -23,8 +23,7 @@ class AddModifyTaskTableViewController: UITableViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var taskDatePicker: UIDatePicker!
-    
-    
+        
     @IBAction func cancelButtonTouched(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }

@@ -16,7 +16,7 @@ class TaskDetailTableViewController: UITableViewController {
     let currentUser = FIRAuth.auth()?.currentUser
     let chatGroupsRef = FIRDatabase.database().reference(withPath: "chatGroups")
     let usersRef = FIRDatabase.database().reference(withPath: "users")
-    var chatGroupToStart: [ChatGroup]?
+    var chatGroupToStart: ChatGroup?
     
     @IBOutlet weak var titleCell: UITableViewCell!
     @IBOutlet weak var descriptionCell: UITableViewCell!
@@ -48,7 +48,10 @@ class TaskDetailTableViewController: UITableViewController {
                         for i in currentUserChatGroups {
                             for j in otherUserChatGroups {
                                 if i == j {
-                                    self.performSegue(withIdentifier: "StartChatSegue", sender: i)
+                                    ChatGroup.getFromDatabaseById(chatGroupId: i, completion: { (chatGroup) in
+                                        self.chatGroupToStart = chatGroup
+                                        self.performSegue(withIdentifier: "StartChatSegue", sender: nil)
+                                    })
                                     return
                                 }
                             }
@@ -61,19 +64,14 @@ class TaskDetailTableViewController: UITableViewController {
     }
     
     private func createNewChatGroup() {
-        let newChatGroupRef = self.chatGroupsRef.childByAutoId()
-        let newChatGroupData: [String: Any] = [
-            "isActive": true,
-            "groupName": task.title,
-            "users": [
-                self.currentUser!.uid: true,
-                self.task.userId: true
-            ]
-        ]
-        newChatGroupRef.setValue(newChatGroupData)
-        let newChatGroupId = newChatGroupRef.key
+        let newChatGroup = ChatGroup(isActive: true, groupName: task.title, users: [self.currentUser!.uid, self.task.userId])
+        newChatGroup.save()
+        let newChatGroupId = newChatGroup.chatGroupId
+        
         self.usersRef.child(self.currentUser!.uid).child("chatGroups").setValue([newChatGroupId: true])
         self.usersRef.child(self.task.userId).child("chatGroups").setValue([newChatGroupId: true])
+        
+        self.chatGroupToStart = newChatGroup
         self.performSegue(withIdentifier: "StartChatSegue", sender: newChatGroupId)
     }
     
@@ -133,6 +131,7 @@ class TaskDetailTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
         navigationItem.title = task.title
         loadDataToCell()
     }
@@ -147,8 +146,10 @@ class TaskDetailTableViewController: UITableViewController {
         } else if segue.identifier == "StartChatSegue" {
             let chatRoomViewController = segue.destination as! ChatRoomViewController
             
-//            Wait to be fixed
-//            chatRoomViewController.chatGroup =
+            guard let chatGroupToStart = self.chatGroupToStart else {
+                fatalError( #function + " chatGroupToStart is nil")
+            }
+            chatRoomViewController.chatGroup = chatGroupToStart
             chatRoomViewController.senderId = self.currentUser!.uid
 //            Will change it to display name later
             chatRoomViewController.senderDisplayName = currentUser!.email

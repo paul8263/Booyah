@@ -14,6 +14,7 @@ class User {
     var displayName: String
     var email: String
     var chatGroups: [String]?
+    var tasks: [String]?
     var ref: FIRDatabaseReference?
     
     init(userId: String, displayName: String = "", email: String = "") {
@@ -47,5 +48,27 @@ class User {
             self.chatGroups = newChatGroups
         }
         
+    }
+    func toDict() -> [String: Any] {
+        var userDict: [String: Any] = ["email": self.email]
+        var chatGroupsDict = [String: Any]()
+        var tasksDict = [String: Any]()
+        if let chatGroups = self.chatGroups {
+            if chatGroups.count > 0 {
+                for chatGroup in chatGroups {
+                    chatGroupsDict[chatGroup] = true
+                }
+            }
+        }
+        if let tasks = self.tasks {
+            if tasks.count > 0 {
+                for task in tasks {
+                    tasksDict[task] = true
+                }
+            }
+        }
+        userDict["chatGroups"] = chatGroupsDict
+        userDict["tasks"] = tasksDict
+        return userDict
     }
 }

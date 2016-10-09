@@ -72,4 +72,8 @@ class Task {
         }
         self.ref = snapshot.ref
     }
+    
+//    func toDict() -> [String: Any] {
+//        
+//    }
 }

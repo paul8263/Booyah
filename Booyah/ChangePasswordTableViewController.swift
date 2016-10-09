@@ -43,7 +43,6 @@ class ChangePasswordTableViewController: UITableViewController {
         return true
     }
 
-
     private func loadUserEmail() {
         guard let user = currentUser else {
             print("User is not logged in")

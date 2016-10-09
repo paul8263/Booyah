@@ -23,63 +23,11 @@ class ChatRoomViewController: JSQMessagesViewController {
     var outgoingMessageBubbleImage: JSQMessagesBubbleImage!
     var incomingMessageBubbleImage: JSQMessagesBubbleImage!
     
-    func snapshotToJSQMessage(snapshot: FIRDataSnapshot) -> JSQMessage {
-        let snapshotValue = snapshot.value as! [String: Any]
-        var msgSenderId = ""
-        var msgDate = Date()
-        var msgText = ""
-        var msgSenderDisplayName = ""
-        if let senderId = snapshotValue["senderId"] as? String {
-            msgSenderId = senderId
-        }
-        if let timestamp = snapshotValue["timestamp"] as? Double {
-            msgDate = Date(timeIntervalSince1970: timestamp)
-        }
-        if let text = snapshotValue["text"] as? String {
-            msgText = text
-        }
-        if let senderDisplayName = snapshotValue["senderDisplayName"] as? String {
-            msgSenderDisplayName = senderDisplayName
-        }
-        return JSQMessage(senderId: msgSenderId, senderDisplayName: msgSenderDisplayName, date: msgDate, text: msgText)
-    }
-    func messageToDatabase(message: JSQMessage) {
-        let chatGroupId = chatGroup?.chatGroupId
-        let currentChatRoomMessagesRef = messagesRef.child(chatGroupId!)
-        let currentMessageRef = currentChatRoomMessagesRef.childByAutoId()
-        var messageData: [String: Any] = ["senderId": self.senderId]
-        if let messageText = message.text {
-            messageData["text"] = messageText
-        }
-        if let date = message.date {
-            messageData["timestamp"] = date.timeIntervalSince1970
-        }
-        if let senderId = message.senderId {
-            messageData["senderId"] = senderId
-        }
-        messageData["senderDisplayName"] = senderDisplayName
-        currentMessageRef.setValue(messageData)
-    }
-    
-//    private func loadMessages() {
-//        self.messageList = []
-//        let chatGroupId = chatGroup?.chatGroupId
-//        let currentChatRoomMessagesRef = messagesRef.child(chatGroupId!).queryLimited(toLast: 25)
-//        currentChatRoomMessagesRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//            if snapshot.childrenCount > 0 {
-//                for childSnapshot in snapshot.children {
-//                    self.messageList.append(self.snapshotToJSQMessage(snapshot: childSnapshot as! FIRDataSnapshot))
-//                }
-//                self.collectionView.reloadData()
-//            }
-//        })
-//    }
-    
     private func observeAddedMessage() {
         let chatGroupId = chatGroup?.chatGroupId
         let currentChatRoomMessagesRef = messagesRef.child(chatGroupId!)
         currentChatRoomMessagesRef.observe(.childAdded, with: { (snapshot) in
-            self.messageList.append(self.snapshotToJSQMessage(snapshot: snapshot))
+            self.messageList.append(JSQMessageHelper.readMessageFromDatabase(snapshot: snapshot))
             self.collectionView.reloadData()
         })
     }
@@ -109,7 +57,6 @@ class ChatRoomViewController: JSQMessagesViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.messageList.removeAll()
-//        loadMessages()
         observeAddedMessage()
         self.chatGroup?.getGroupDisplayName(currentUser: self.currentUser!, completionHandler: { (name) in
             self.navigationItem.title =  name
@@ -170,7 +117,7 @@ class ChatRoomViewController: JSQMessagesViewController {
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
         let message = JSQMessage(senderId: self.senderId, senderDisplayName: senderDisplayName, date: Date(), text: text)!
-        messageToDatabase(message: message)
+        JSQMessageHelper.saveMessageToDatabase(message: message, chatGroupId: self.chatGroup!.chatGroupId)
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         finishSendingMessage()
     }

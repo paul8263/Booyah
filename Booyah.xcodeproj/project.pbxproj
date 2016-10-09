@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BAA31401DAA1FFE00DE76CE /* JSQMessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA313F1DAA1FFD00DE76CE /* JSQMessageHelper.swift */; };
 		2BC1A4BD1DA35F5200057AB6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4BC1DA35F5200057AB6 /* Task.swift */; };
 		2BC1A4BF1DA360A900057AB6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4BE1DA360A900057AB6 /* LoginViewController.swift */; };
 		2BC1A4C11DA3659800057AB6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4C01DA3659800057AB6 /* SignUpViewController.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		0B23683257B955E7E0613F22 /* Pods_BooyahUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BooyahUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5412D21C58AEDD5BA6ABBB /* Pods_Booyah.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Booyah.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BAA313F1DAA1FFD00DE76CE /* JSQMessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQMessageHelper.swift; sourceTree = "<group>"; };
 		2BC1A4BC1DA35F5200057AB6 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		2BC1A4BE1DA360A900057AB6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2BC1A4C01DA3659800057AB6 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				2BC1A4BC1DA35F5200057AB6 /* Task.swift */,
 				2BC1A4CC1DA36E1400057AB6 /* User.swift */,
 				2BC1A55B1DA8DFE200057AB6 /* ChatGroup.swift */,
+				2BAA313F1DAA1FFD00DE76CE /* JSQMessageHelper.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 				2BC1A4CB1DA36B2700057AB6 /* TutorialPageViewController.swift in Sources */,
 				2BC1A4C11DA3659800057AB6 /* SignUpViewController.swift in Sources */,
 				2BC1A4C31DA368A800057AB6 /* MyInfoTableViewController.swift in Sources */,
+				2BAA31401DAA1FFE00DE76CE /* JSQMessageHelper.swift in Sources */,
 				2BC1A4CF1DA372BE00057AB6 /* TaskDetailTableViewController.swift in Sources */,
 				2BC1A4C91DA36A8E00057AB6 /* ChatRoomViewController.swift in Sources */,
 				2BC1A5571DA759F900057AB6 /* ChangePasswordTableViewController.swift in Sources */,
