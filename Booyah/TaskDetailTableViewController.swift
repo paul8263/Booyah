@@ -16,6 +16,7 @@ class TaskDetailTableViewController: UITableViewController {
     let currentUser = FIRAuth.auth()?.currentUser
     let chatGroupsRef = FIRDatabase.database().reference(withPath: "chatGroups")
     let usersRef = FIRDatabase.database().reference(withPath: "users")
+    var chatGroupToStart: [ChatGroup]?
     
     @IBOutlet weak var titleCell: UITableViewCell!
     @IBOutlet weak var descriptionCell: UITableViewCell!
@@ -145,7 +146,9 @@ class TaskDetailTableViewController: UITableViewController {
             addModifyTaskTableViewController.task = task
         } else if segue.identifier == "StartChatSegue" {
             let chatRoomViewController = segue.destination as! ChatRoomViewController
-            chatRoomViewController.chatGroupId = (sender as! String)
+            
+//            Wait to be fixed
+//            chatRoomViewController.chatGroup =
             chatRoomViewController.senderId = self.currentUser!.uid
 //            Will change it to display name later
             chatRoomViewController.senderDisplayName = currentUser!.email

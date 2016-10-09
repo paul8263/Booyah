@@ -17,6 +17,12 @@ class ChatGroup {
     var users: [String]
     var ref: FIRDatabaseReference?
     
+    init(chatGroupId: String = "", isActive: Bool = true, groupName: String = "", users: [String] = []) {
+        self.chatGroupId = chatGroupId
+        self.isActive = isActive
+        self.groupName = groupName
+        self.users = users
+    }
     init(snapshot: FIRDataSnapshot) {
         self.ref = snapshot.ref
         self.chatGroupId = snapshot.key
@@ -29,6 +35,13 @@ class ChatGroup {
             users.append(key)
         }
     }
+//    init(dict: [String: Any]) {
+//        
+//    }
+//    
+//    func toDict() -> [String: Any] {
+//        
+//    }
     
 //    Return the name of the other user
     func getGroupDisplayName(currentUser: FIRUser, completionHandler: @escaping (String) -> Void) {
@@ -42,5 +55,8 @@ class ChatGroup {
                 })
             }
         }
+    }
+    func save() {
+        
     }
 }
