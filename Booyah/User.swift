@@ -8,8 +8,10 @@
 
 import Foundation
 import FirebaseDatabase
+import FirebaseAuth
 
 class User {
+    static let userBaseRef = FIRDatabase.database().reference(withPath: "users")
     var userId: String
     var displayName: String
     var email: String
@@ -47,8 +49,24 @@ class User {
             }
             self.chatGroups = newChatGroups
         }
-        
     }
+    
+    init(fromFIRUser: FIRUser) {
+        if let email = fromFIRUser.email {
+            self.email = email
+        } else {
+            self.email = ""
+        }
+        if let displayName = fromFIRUser.displayName {
+            self.displayName = displayName
+        } else {
+            self.displayName = ""
+        }
+        self.userId = fromFIRUser.uid
+        self.chatGroups = [String]()
+        self.tasks = [String]()
+    }
+    
     func toDict() -> [String: Any] {
         var userDict: [String: Any] = ["email": self.email]
         var chatGroupsDict = [String: Any]()
@@ -71,4 +89,16 @@ class User {
         userDict["tasks"] = tasksDict
         return userDict
     }
+    func save() {
+        var newUserRef: FIRDatabaseReference!
+        if self.userId == "" {
+            newUserRef = User.userBaseRef.childByAutoId()
+        } else {
+            newUserRef = User.userBaseRef.child(self.userId)
+        }
+        newUserRef.setValue(self.toDict())
+        self.userId = newUserRef.key
+        self.ref = newUserRef
+    }
+    
 }

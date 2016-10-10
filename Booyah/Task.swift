@@ -10,6 +10,8 @@ import Foundation
 import FirebaseDatabase
 
 class Task {
+    static let taskBaseRef = FIRDatabase.database().reference(withPath: "tasks")
+    
     var taskId: String
     var title: String
     var description: String
@@ -73,7 +75,25 @@ class Task {
         self.ref = snapshot.ref
     }
     
-//    func toDict() -> [String: Any] {
-//        
-//    }
+    func toDict() -> [String: Any] {
+        var taskDict: [String: Any] = ["title": self.title]
+        taskDict["description"] = self.description
+        taskDict["address"] = self.address
+        taskDict["timestamp"] = self.date.timeIntervalSince1970
+        taskDict["userId"] = self.userId
+        taskDict["latitude"] = self.latitude
+        taskDict["longitude"] = self.longitude
+        return taskDict
+    }
+    func save() {
+        var newTaskRef: FIRDatabaseReference!
+        if self.taskId == "" {
+            newTaskRef = Task.taskBaseRef.childByAutoId()
+        } else {
+            newTaskRef = Task.taskBaseRef.child(self.taskId)
+        }
+        newTaskRef.setValue(self.toDict())
+        self.taskId = newTaskRef.key
+        self.ref = newTaskRef
+    }
 }

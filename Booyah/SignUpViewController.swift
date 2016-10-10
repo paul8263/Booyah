@@ -8,11 +8,8 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseDatabase
 
 class SignUpViewController: UIViewController {
-    
-    let userBaseRef = FIRDatabase.database().reference(withPath: "users")
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -38,7 +35,8 @@ class SignUpViewController: UIViewController {
                 alertController = UIAlertController(title: "Success", message: "Your account has been created", preferredStyle: .alert)
                 isSuccess = true
                 FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
-                    self.saveUserInDatabase(user: user!)
+                    let user = User(fromFIRUser: user!)
+                    user.save()
                 })
             } else {
                 alertController = UIAlertController(title: "Error", message: "User account creation error", preferredStyle: .alert)
@@ -53,16 +51,6 @@ class SignUpViewController: UIViewController {
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)
         })
-    }
-    
-    private func saveUserInDatabase(user: FIRUser) {
-        let currentUserRef = userBaseRef.child(user.uid)
-        let userDataDict: [String: Any] = [
-            "email": user.email!,
-            "chatgroups": [],
-            "tasks": []
-        ]
-        currentUserRef.setValue(userDataDict)
     }
 
     @IBAction func backButtonTouched(_ sender: UIButton) {
@@ -83,8 +71,6 @@ class SignUpViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
     /*
     // MARK: - Navigation
 

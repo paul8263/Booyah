@@ -12,7 +12,6 @@ import FirebaseAuth
 
 class AddModifyTaskTableViewController: UITableViewController {
     
-    let taskBaseRef = FIRDatabase.database().reference(withPath: "tasks")
     let userBaseRef = FIRDatabase.database().reference(withPath: "users")
     var currentUser = FIRAuth.auth()?.currentUser
     
@@ -34,17 +33,9 @@ class AddModifyTaskTableViewController: UITableViewController {
     
     private func addNewTaskToFirebase() {
         if isLoggedIn() {
-            let taskRef = taskBaseRef.childByAutoId()
-            let taskData: [String: Any] = [
-                "title": self.titleTextField.text!,
-                "description": self.descriptionTextView.text!,
-                "address": self.addressTextField.text!,
-                "timestamp": self.taskDatePicker.date.timeIntervalSince1970,
-                "userId": currentUser!.uid
-            ]
-            taskRef.setValue(taskData)
-            
-            let taskId = taskRef.key
+            let task = createOrUpdateTaskFromView(oldTask: nil)
+            task.save()
+            let taskId = task.ref!.key
             let userTaskRef = userBaseRef.child(currentUser!.uid).child("tasks").child(taskId)
             userTaskRef.setValue(true)
         } else {
@@ -54,14 +45,8 @@ class AddModifyTaskTableViewController: UITableViewController {
     
     private func updateTaskInFirebase() {
         if isLoggedIn() {
-            let taskvalue: [String: Any] = [
-                "title": self.titleTextField.text!,
-                "description": self.descriptionTextView.text!,
-                "address": self.addressTextField.text!,
-                "timestamp": self.taskDatePicker.date.timeIntervalSince1970,
-                "userId": currentUser!.uid
-            ]
-            task?.ref?.setValue(taskvalue)
+            let task = createOrUpdateTaskFromView(oldTask: self.task!)
+            task.save()
         } else {
             print("User is not logged in")
         }
@@ -81,7 +66,7 @@ class AddModifyTaskTableViewController: UITableViewController {
             }
             dismiss(animated: true, completion: nil)
         } else {
-            
+//            Todo
         }
     }
     
@@ -89,24 +74,29 @@ class AddModifyTaskTableViewController: UITableViewController {
         self.titleTextField.text = task?.title
         self.descriptionTextView.text = task?.description
         self.addressTextField.text = task?.address
-        
         self.taskDatePicker.date = (task?.date)!
     }
     
-    private func createNewTask() -> Task {
-        let task = Task()
+    private func createOrUpdateTaskFromView(oldTask: Task?) -> Task {
+        var returnedTask: Task!
+        if let task = oldTask {
+            returnedTask = task
+        } else {
+            returnedTask = Task()
+        }
         if let title = self.titleTextField.text {
-            task.title = title
+            returnedTask.title = title
         }
         if let description = self.descriptionTextView.text {
-            task.description = description
+            returnedTask.description = description
         }
         if let address = self.addressTextField.text {
-            task.address = address
+            returnedTask.address = address
         }
         
-        task.date = taskDatePicker.date
-        return task
+        returnedTask.date = taskDatePicker.date
+        returnedTask.userId = self.currentUser!.uid
+        return returnedTask
     }
     
     override func viewDidLoad() {
@@ -135,5 +125,4 @@ class AddModifyTaskTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
     }
-
 }

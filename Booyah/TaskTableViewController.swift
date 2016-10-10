@@ -109,11 +109,19 @@ class TaskTableViewController: UITableViewController {
         if isLoggedIn() {
             setUpSearchBar()
             setUpTableView()
-            loadTasks()
         } else {
             print("User is not logged in")
         }
         setRefreshControl()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isLoggedIn() {
+            loadTasks()
+        } else {
+            print("User is not logged in")
+        }
     }
     
     override func didReceiveMemoryWarning() {
