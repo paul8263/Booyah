@@ -39,7 +39,7 @@ class User {
             self.email = ""
         }
         self.ref = snapshot.ref
-        if snapshotValue["chatGroups"] is NSNull {
+        if snapshotValue["chatGroups"] == nil {
             self.chatGroups = []
         } else {
             var newChatGroups = [String]()

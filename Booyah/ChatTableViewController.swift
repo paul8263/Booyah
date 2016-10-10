@@ -15,19 +15,9 @@ class ChatTableViewController: UITableViewController {
     let currentUser = FIRAuth.auth()?.currentUser
     let usersRef = FIRDatabase.database().reference(withPath: "users")
     let chatGroupsRef = FIRDatabase.database().reference(withPath: "chatGroups")
-    
-//    Will be removed
-    var userList = [User]()
+    let messagesRef = FIRDatabase.database().reference(withPath: "messages")
     
     var chatGroupList = [ChatGroup]()
-    
-//    Will be removed
-    private func loadUsers() {
-        userList += [
-            User(userId: "0", displayName: "Paul"),
-            User(userId: "1", displayName: "Kate"),
-        ]
-    }
     
     private func loadChatGroups() {
         self.chatGroupList.removeAll()
@@ -53,9 +43,6 @@ class ChatTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-//        loadUsers()
-        loadChatGroups()
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,6 +53,7 @@ class ChatTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
+        loadChatGroups()
     }
 
     // MARK: - Table view data source
@@ -97,27 +85,34 @@ class ChatTableViewController: UITableViewController {
     }
     */
 
+//    Consider isActive later
+    func removeChatGroup(chatGroup: ChatGroup) {
+        let userIds: [String] = chatGroup.users
+        for userId in userIds {
+            User.removeChatGroupWithUserId(userId: userId, chatGroupId: chatGroup.chatGroupId)
+        }
+        chatGroup.delete()
+        messagesRef.child(chatGroup.chatGroupId).removeValue()
+    }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            userList.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
+        if editingStyle == .delete {
+            let chatGroupToBeRemoved = self.chatGroupList[indexPath.row]
+            removeChatGroup(chatGroup: chatGroupToBeRemoved)
+            self.chatGroupList.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "ChatRoomSegue" {
             let indexPath = sender as! IndexPath
             let chatRoomViewController = segue.destination as! ChatRoomViewController
-//            chatRoomViewController.chattingWithUser = chatGroupList[indexPath.row]
             chatRoomViewController.chatGroup = chatGroupList[indexPath.row]
-//            Todo
             chatRoomViewController.senderId = currentUser!.uid
             chatRoomViewController.senderDisplayName = currentUser!.email!
         }
