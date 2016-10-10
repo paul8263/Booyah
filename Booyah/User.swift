@@ -89,6 +89,7 @@ class User {
         userDict["tasks"] = tasksDict
         return userDict
     }
+    
     func save() {
         var newUserRef: FIRDatabaseReference!
         if self.userId == "" {
@@ -101,4 +102,39 @@ class User {
         self.ref = newUserRef
     }
     
+    func addChatGroup(chatGroupId: String) {
+        let chatGroupRef = User.userBaseRef.child(self.userId).child("chatGroups").child(chatGroupId)
+        chatGroupRef.setValue(true)
+    }
+    
+    func addTask(taskId: String) {
+        let userTaskRef = User.userBaseRef.child(self.userId).child("tasks").child(taskId)
+        userTaskRef.setValue(true)
+    }
+    
+    func removeChatGroup(chatGroupId: String) {
+        let chatGroupRef = User.userBaseRef.child(self.userId).child("chatGroups").child(chatGroupId)
+        chatGroupRef.removeValue()
+    }
+    func removeTask(taskId: String) {
+        let userTaskRef = User.userBaseRef.child(self.userId).child("tasks").child(taskId)
+        userTaskRef.removeValue()
+    }
+    
+    static func addChatGroupWithUserId(userId: String, chatGroupId: String) {
+        let chatGroupRef = User.userBaseRef.child(userId).child("chatGroups").child(chatGroupId)
+        chatGroupRef.setValue(true)
+    }
+    static func addTaskWithUserId(userId: String, taskId: String) {
+        let userTaskRef = User.userBaseRef.child(userId).child("tasks").child(taskId)
+        userTaskRef.setValue(true)
+    }
+    static func removeChatGroupWithUserId(userId: String, chatGroupId: String) {
+        let chatGroupRef = User.userBaseRef.child(userId).child("chatGroups").child(chatGroupId)
+        chatGroupRef.removeValue()
+    }
+    static func removeTaskWithUserId(userId: String, taskId: String) {
+        let userTaskRef = User.userBaseRef.child(userId).child("tasks").child(taskId)
+        userTaskRef.removeValue()
+    }
 }

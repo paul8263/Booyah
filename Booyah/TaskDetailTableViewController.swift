@@ -25,7 +25,6 @@ class TaskDetailTableViewController: UITableViewController {
     @IBOutlet weak var modifyButton: UIBarButtonItem!
     @IBOutlet weak var startChatButton: UIButton!
     
-    
     private func startChat() {
         var currentUserChatGroups = [String]()
         var otherUserChatGroups = [String]()
@@ -67,9 +66,8 @@ class TaskDetailTableViewController: UITableViewController {
         let newChatGroup = ChatGroup(isActive: true, groupName: task.title, users: [self.currentUser!.uid, self.task.userId])
         newChatGroup.save()
         let newChatGroupId = newChatGroup.chatGroupId
-        
-        self.usersRef.child(self.currentUser!.uid).child("chatGroups").setValue([newChatGroupId: true])
-        self.usersRef.child(self.task.userId).child("chatGroups").setValue([newChatGroupId: true])
+        User.addChatGroupWithUserId(userId: self.currentUser!.uid, chatGroupId: newChatGroupId)
+        User.addChatGroupWithUserId(userId: self.task.userId, chatGroupId: newChatGroupId)
         
         self.chatGroupToStart = newChatGroup
         self.performSegue(withIdentifier: "StartChatSegue", sender: newChatGroupId)

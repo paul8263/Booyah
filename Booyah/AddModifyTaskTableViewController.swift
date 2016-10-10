@@ -16,7 +16,6 @@ protocol AddModifyTaskTableViewControllerDelegate: class {
 
 class AddModifyTaskTableViewController: UITableViewController {
     
-    let userBaseRef = FIRDatabase.database().reference(withPath: "users")
     var currentUser = FIRAuth.auth()?.currentUser
     
     var isAddingTask = false
@@ -42,8 +41,7 @@ class AddModifyTaskTableViewController: UITableViewController {
             let task = createOrUpdateTaskFromView(oldTask: nil)
             task.save()
             let taskId = task.ref!.key
-            let userTaskRef = userBaseRef.child(currentUser!.uid).child("tasks").child(taskId)
-            userTaskRef.setValue(true)
+            User.addTaskWithUserId(userId: currentUser!.uid, taskId: taskId)
             self.delegate?.taskDidAddedOrModified(newTask: task)
         } else {
             print("User is not logged in")

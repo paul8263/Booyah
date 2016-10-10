@@ -96,4 +96,7 @@ class Task {
         self.taskId = newTaskRef.key
         self.ref = newTaskRef
     }
+    func delete() {
+        self.ref?.removeValue()
+    }
 }

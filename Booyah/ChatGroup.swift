@@ -86,4 +86,7 @@ class ChatGroup {
         self.ref = newChatGroupRef
         self.chatGroupId = newChatGroupRef.key
     }
+    func delete() {
+        self.ref?.removeValue()
+    }
 }
