@@ -115,7 +115,7 @@ class TaskTableViewController: UITableViewController {
         setRefreshControl()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isLoggedIn() {
             loadTasks()

@@ -143,6 +143,7 @@ class TaskDetailTableViewController: UITableViewController {
             let addModifyTaskTableViewController = navigationController.viewControllers.first as! AddModifyTaskTableViewController
             addModifyTaskTableViewController.isAddingTask = false
             addModifyTaskTableViewController.task = task
+            addModifyTaskTableViewController.delegate = self
         } else if segue.identifier == "StartChatSegue" {
             let chatRoomViewController = segue.destination as! ChatRoomViewController
             
@@ -154,5 +155,11 @@ class TaskDetailTableViewController: UITableViewController {
 //            Will change it to display name later
             chatRoomViewController.senderDisplayName = currentUser!.email
         }
+    }
+}
+
+extension TaskDetailTableViewController: AddModifyTaskTableViewControllerDelegate {
+    func taskDidAddedOrModified(newTask: Task) {
+        self.task = newTask
     }
 }

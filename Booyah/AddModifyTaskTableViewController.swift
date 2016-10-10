@@ -10,6 +10,10 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 
+protocol AddModifyTaskTableViewControllerDelegate: class {
+    func taskDidAddedOrModified(newTask: Task)
+}
+
 class AddModifyTaskTableViewController: UITableViewController {
     
     let userBaseRef = FIRDatabase.database().reference(withPath: "users")
@@ -17,6 +21,8 @@ class AddModifyTaskTableViewController: UITableViewController {
     
     var isAddingTask = false
     var task: Task?
+    
+    var delegate: AddModifyTaskTableViewControllerDelegate?
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -38,6 +44,7 @@ class AddModifyTaskTableViewController: UITableViewController {
             let taskId = task.ref!.key
             let userTaskRef = userBaseRef.child(currentUser!.uid).child("tasks").child(taskId)
             userTaskRef.setValue(true)
+            self.delegate?.taskDidAddedOrModified(newTask: task)
         } else {
             print("User is not logged in")
         }
@@ -47,6 +54,7 @@ class AddModifyTaskTableViewController: UITableViewController {
         if isLoggedIn() {
             let task = createOrUpdateTaskFromView(oldTask: self.task!)
             task.save()
+            self.delegate?.taskDidAddedOrModified(newTask: task)
         } else {
             print("User is not logged in")
         }
