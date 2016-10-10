@@ -14,7 +14,6 @@ class TaskDetailTableViewController: UITableViewController {
     
     var task: Task!
     let currentUser = FIRAuth.auth()?.currentUser
-    let chatGroupsRef = FIRDatabase.database().reference(withPath: "chatGroups")
     let usersRef = FIRDatabase.database().reference(withPath: "users")
     var chatGroupToStart: ChatGroup?
     
@@ -74,7 +73,20 @@ class TaskDetailTableViewController: UITableViewController {
     }
     
     @IBAction func chatButtonTouched(_ sender: UIButton) {
-        startChat()
+        if task.userId != currentUser!.uid {
+            startChat()
+        } else {
+            let alertController = UIAlertController(title: "Delete Task", message: "This task will be deleted. Are you sure?", preferredStyle: .actionSheet)
+            let okAction = UIAlertAction(title: "OK", style: .destructive, handler: { (action) in
+                self.task.delete()
+                User.removeTaskWithUserId(userId: self.currentUser!.uid, taskId: self.task.taskId)
+                self.navigationController?.popViewController(animated: true)
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true, completion: nil)
+        }
     }
         
     @IBAction func modifyButtonTouched(_ sender: UIBarButtonItem) {
@@ -118,8 +130,13 @@ class TaskDetailTableViewController: UITableViewController {
         if task.userId != currentUser!.uid {
             modifyButton.isEnabled = false
         } else {
-            startChatButton.isEnabled = false
+            startChatButton.setTitle("Delete Task", for: UIControlState.normal)
+//            startChatButton.isEnabled = false
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: false)
     }
 
     override func didReceiveMemoryWarning() {

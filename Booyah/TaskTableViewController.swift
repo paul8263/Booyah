@@ -21,7 +21,7 @@ class TaskTableViewController: UITableViewController {
     
     var searchController: UISearchController!
     
-    func loadTasks() {
+    func loadTasks(completion: (() -> Void)? = nil) {
         if isShowingTasksForCurrentUserOnly {
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 var newTaskList = [Task]()
@@ -33,8 +33,11 @@ class TaskTableViewController: UITableViewController {
                 }
                 self.taskList = newTaskList
                 self.tableView.reloadData()
-                if self.refreshControl!.isRefreshing {
-                    self.refreshControl!.endRefreshing()
+                completion?()
+                if let refControl = self.refreshControl {
+                    if refControl.isRefreshing {
+                        refControl.endRefreshing()
+                    }
                 }
             })
         } else {
@@ -45,8 +48,11 @@ class TaskTableViewController: UITableViewController {
                 }
                 self.taskList = newTaskList
                 self.tableView.reloadData()
-                if self.refreshControl!.isRefreshing {
-                    self.refreshControl!.endRefreshing()
+                completion?()
+                if let refControl = self.refreshControl {
+                    if refControl.isRefreshing {
+                        refControl.endRefreshing()
+                    }
                 }
             })
         }
@@ -60,6 +66,9 @@ class TaskTableViewController: UITableViewController {
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
+        
+        searchController.delegate = self
+        
 //        searchController.hidesNavigationBarDuringPresentation = true
 //      Hide the search bar when jumped to Task detail view controller after the result cell is touched
 //      This is very important, the current view controller will present a search controller over its main view. Setting the definesPresentationContext property to true will indicate that the view controller’s view will be covered each time the search controller is shown over it. This will allow to avoid unknown behaviour.
@@ -77,10 +86,19 @@ class TaskTableViewController: UITableViewController {
         self.tableView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.96, alpha:1.00)
     }
     
-    private func setRefreshControl() {
+    func loadTaskInSelection() {
+        loadTasks(completion: nil)
+    }
+    
+    func setRefreshControl() {
         self.refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(TaskTableViewController.loadTasks), for: UIControlEvents.valueChanged)
+        refreshControl?.addTarget(self, action: #selector(TaskTableViewController.loadTaskInSelection), for: UIControlEvents.valueChanged)
         tableView.addSubview(self.refreshControl!)
+    }
+    
+    func removeRefreshControl() {
+        self.refreshControl?.removeFromSuperview()
+        self.refreshControl = nil
     }
     
     func filterTask(keyword: String) {
@@ -118,7 +136,13 @@ class TaskTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isLoggedIn() {
-            loadTasks()
+            if self.searchController.isActive {
+                loadTasks(completion: { Void in
+                    self.updateSearchResults(for: self.searchController)
+                })
+            } else {
+                loadTasks(completion: nil)
+            }
         } else {
             print("User is not logged in")
         }
@@ -230,5 +254,15 @@ extension TaskTableViewController: UISearchResultsUpdating {
             self.filterTask(keyword: keyword)
             tableView.reloadData()
         }
+    }
+}
+
+extension TaskTableViewController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        self.removeRefreshControl()
+    }
+    
+    func didDismissSearchController(_ searchController: UISearchController) {
+        self.setRefreshControl()
     }
 }
