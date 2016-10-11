@@ -39,6 +39,24 @@ class LoginViewController: UIViewController {
         })
     }
     
+    func checkHasViewedTutorial() {
+        let userDefault = UserDefaults.standard
+        let hasViewedTutorial = userDefault.bool(forKey: "hasViewedTutoral")
+        
+//        Todo
+//        uncomment these 3 lines when finished testing
+//        if !hasViewedTutorial {
+//            userDefault.set(true, forKey: "hasViewedTutoral")
+            let tutorialViewController = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController")
+            present(tutorialViewController, animated: true, completion: nil)
+//        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkHasViewedTutorial()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2BAA31401DAA1FFE00DE76CE /* JSQMessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA313F1DAA1FFD00DE76CE /* JSQMessageHelper.swift */; };
+		2BAA31421DAC90DE00DE76CE /* TutorialOneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA31411DAC90DE00DE76CE /* TutorialOneViewController.swift */; };
+		2BAA31451DAC911E00DE76CE /* TutorialTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA31441DAC911E00DE76CE /* TutorialTwoViewController.swift */; };
+		2BAA31471DAC92DA00DE76CE /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA31461DAC92DA00DE76CE /* TutorialViewController.swift */; };
 		2BC1A4BD1DA35F5200057AB6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4BC1DA35F5200057AB6 /* Task.swift */; };
 		2BC1A4BF1DA360A900057AB6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4BE1DA360A900057AB6 /* LoginViewController.swift */; };
 		2BC1A4C11DA3659800057AB6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC1A4C01DA3659800057AB6 /* SignUpViewController.swift */; };
@@ -55,6 +58,9 @@
 		0B23683257B955E7E0613F22 /* Pods_BooyahUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BooyahUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5412D21C58AEDD5BA6ABBB /* Pods_Booyah.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Booyah.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BAA313F1DAA1FFD00DE76CE /* JSQMessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQMessageHelper.swift; sourceTree = "<group>"; };
+		2BAA31411DAC90DE00DE76CE /* TutorialOneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialOneViewController.swift; sourceTree = "<group>"; };
+		2BAA31441DAC911E00DE76CE /* TutorialTwoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialTwoViewController.swift; sourceTree = "<group>"; };
+		2BAA31461DAC92DA00DE76CE /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		2BC1A4BC1DA35F5200057AB6 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		2BC1A4BE1DA360A900057AB6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2BC1A4C01DA3659800057AB6 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +126,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2BAA31431DAC90E800DE76CE /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				2BAA31461DAC92DA00DE76CE /* TutorialViewController.swift */,
+				2BC1A4CA1DA36B2700057AB6 /* TutorialPageViewController.swift */,
+				2BAA31411DAC90DE00DE76CE /* TutorialOneViewController.swift */,
+				2BAA31441DAC911E00DE76CE /* TutorialTwoViewController.swift */,
+			);
+			name = Tutorial;
+			sourceTree = "<group>";
+		};
 		2BC1A4B61DA359E400057AB6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,11 +146,11 @@
 				2BC1A4C41DA36A2D00057AB6 /* TaskTableViewController.swift */,
 				2BC1A4C61DA36A3900057AB6 /* ChatTableViewController.swift */,
 				2BC1A4C81DA36A8E00057AB6 /* ChatRoomViewController.swift */,
-				2BC1A4CA1DA36B2700057AB6 /* TutorialPageViewController.swift */,
 				2BC1A4CE1DA372BE00057AB6 /* TaskDetailTableViewController.swift */,
 				2BC1A50E1DA5C43C00057AB6 /* TaskTableViewCell.swift */,
 				2BC1A5101DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift */,
 				2BC1A5561DA759F900057AB6 /* ChangePasswordTableViewController.swift */,
+				2BAA31431DAC90E800DE76CE /* Tutorial */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -542,6 +559,7 @@
 				2BC1A4CF1DA372BE00057AB6 /* TaskDetailTableViewController.swift in Sources */,
 				2BC1A4C91DA36A8E00057AB6 /* ChatRoomViewController.swift in Sources */,
 				2BC1A5571DA759F900057AB6 /* ChangePasswordTableViewController.swift in Sources */,
+				2BAA31471DAC92DA00DE76CE /* TutorialViewController.swift in Sources */,
 				2BC1A5111DA5CF7300057AB6 /* AddModifyTaskTableViewController.swift in Sources */,
 				2BC1A55C1DA8DFE200057AB6 /* ChatGroup.swift in Sources */,
 				2BC1A4BF1DA360A900057AB6 /* LoginViewController.swift in Sources */,
@@ -549,7 +567,9 @@
 				2BC1A50F1DA5C43C00057AB6 /* TaskTableViewCell.swift in Sources */,
 				2BC38E981DA3558500F2AC6A /* AppDelegate.swift in Sources */,
 				2BC1A4CD1DA36E1400057AB6 /* User.swift in Sources */,
+				2BAA31451DAC911E00DE76CE /* TutorialTwoViewController.swift in Sources */,
 				2BC1A4C71DA36A3900057AB6 /* ChatTableViewController.swift in Sources */,
+				2BAA31421DAC90DE00DE76CE /* TutorialOneViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

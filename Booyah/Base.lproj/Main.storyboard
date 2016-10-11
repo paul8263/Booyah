@@ -6,13 +6,134 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Tutorial View Controller-->
+        <scene sceneID="IM6-aD-Uvj">
+            <objects>
+                <viewController storyboardIdentifier="TutorialViewController" id="1Jf-IJ-HIv" customClass="TutorialViewController" customModule="Booyah" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aO6-NG-N8U"/>
+                        <viewControllerLayoutGuide type="bottom" id="WdA-v4-hIB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PRl-y0-Txb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0x-QK-Oet">
+                                <connections>
+                                    <segue destination="fFZ-FA-iaA" kind="embed" id="ZiH-fh-uLS"/>
+                                </connections>
+                            </containerView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="MEu-Kl-OMd"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Q0x-QK-Oet" firstAttribute="leading" secondItem="PRl-y0-Txb" secondAttribute="leading" id="5s3-cN-nKu"/>
+                            <constraint firstAttribute="trailing" secondItem="Q0x-QK-Oet" secondAttribute="trailing" id="D87-tE-Qu3"/>
+                            <constraint firstItem="WdA-v4-hIB" firstAttribute="top" secondItem="Q0x-QK-Oet" secondAttribute="bottom" id="LtY-DJ-nNZ"/>
+                            <constraint firstItem="Q0x-QK-Oet" firstAttribute="top" secondItem="aO6-NG-N8U" secondAttribute="bottom" id="Smd-Cm-vbH"/>
+                            <constraint firstItem="WdA-v4-hIB" firstAttribute="top" secondItem="MEu-Kl-OMd" secondAttribute="bottom" constant="20" id="hbP-9C-66V"/>
+                            <constraint firstItem="MEu-Kl-OMd" firstAttribute="centerX" secondItem="PRl-y0-Txb" secondAttribute="centerX" id="zmY-6W-tjJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tutorialPageControl" destination="MEu-Kl-OMd" id="Y8w-JA-wpb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dKG-J5-k5Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-970" y="-1460"/>
+        </scene>
         <!--Tutorial Page View Controller-->
         <scene sceneID="iAb-7z-m5r">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="fFZ-FA-iaA" customClass="TutorialPageViewController" customModule="Booyah" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="fFZ-FA-iaA" customClass="TutorialPageViewController" customModule="Booyah" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NCY-ki-w7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-215" y="-1454"/>
+            <point key="canvasLocation" x="-215" y="-1467"/>
+        </scene>
+        <!--Tutorial One View Controller-->
+        <scene sceneID="YCj-Ro-iMj">
+            <objects>
+                <viewController storyboardIdentifier="Tutorial1" id="6hg-PX-Q6A" customClass="TutorialOneViewController" customModule="Booyah" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ja1-tt-rDQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="ATv-bR-DeS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="O3F-dm-ayd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Booyah" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pp-fR-CoC">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="P4A-GA-Loc"/>
+                                    <constraint firstAttribute="width" constant="156" id="PJQ-hm-nTZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="47"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make life better by helping each other" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGO-XB-Zg4">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="85" id="LfB-Sh-GGO"/>
+                                    <constraint firstAttribute="width" constant="334" id="l8f-6o-kXx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.91942081149999999" green="0.6115859803" blue="0.13946813199999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="BGO-XB-Zg4" firstAttribute="top" secondItem="0pp-fR-CoC" secondAttribute="bottom" constant="80" id="Oh2-0y-ibv"/>
+                            <constraint firstItem="0pp-fR-CoC" firstAttribute="centerX" secondItem="O3F-dm-ayd" secondAttribute="centerX" id="iGw-Y3-rul"/>
+                            <constraint firstItem="BGO-XB-Zg4" firstAttribute="centerX" secondItem="O3F-dm-ayd" secondAttribute="centerX" id="pBF-9m-niU"/>
+                            <constraint firstItem="0pp-fR-CoC" firstAttribute="centerY" secondItem="O3F-dm-ayd" secondAttribute="centerY" id="xsM-MS-7gv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="labelOne" destination="0pp-fR-CoC" id="O2n-7H-0YZ"/>
+                        <outlet property="labelTwo" destination="BGO-XB-Zg4" id="anY-lh-8lV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JKz-Pq-uaW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="546" y="-1459"/>
+        </scene>
+        <!--Tutorial Two View Controller-->
+        <scene sceneID="PgL-An-b77">
+            <objects>
+                <viewController storyboardIdentifier="Tutorial2" id="1FX-P9-NAr" customClass="TutorialTwoViewController" customModule="Booyah" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="c32-JJ-huV"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yxa-Oe-3xK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XB3-8p-EIO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tS5-BE-nfu">
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Let's rock and roll">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startButtonTouched:" destination="1FX-P9-NAr" eventType="touchUpInside" id="0xZ-jQ-WvO"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.91942081149999999" green="0.6115859803" blue="0.13946813199999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="tS5-BE-nfu" firstAttribute="centerY" secondItem="XB3-8p-EIO" secondAttribute="centerY" id="T4c-Ur-LZg"/>
+                            <constraint firstItem="tS5-BE-nfu" firstAttribute="centerX" secondItem="XB3-8p-EIO" secondAttribute="centerX" id="hc2-Ew-Hhb"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="startButton" destination="tS5-BE-nfu" id="RLu-eZ-zyb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Ta-gu-IgB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1376.8" y="-1459.52023988006"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Ou1-OD-7co">
