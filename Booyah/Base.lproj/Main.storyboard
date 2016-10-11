@@ -981,6 +981,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Me" id="9gg-s3-TY3"/>
                     <connections>
+                        <outlet property="displayNameLabel" destination="2wO-yK-FOH" id="vGs-N7-BYq"/>
                         <segue destination="8Fq-9H-JHv" kind="showDetail" identifier="LogoutSegue" id="bWx-vQ-v4o"/>
                         <segue destination="M3p-5b-yLX" kind="show" identifier="ShowMyTaskSegue" id="I9N-9p-E6N"/>
                         <segue destination="lfI-zr-PAv" kind="show" identifier="ChangePasswordSegue" id="y8z-RF-dKV"/>

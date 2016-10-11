@@ -31,6 +31,8 @@ class ChatTableViewController: UITableViewController {
                         self.tableView.reloadData()
                     })
                 }
+            } else {
+                self.tableView.reloadData()
             }
         })
     }

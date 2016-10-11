@@ -8,13 +8,19 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class MyInfoTableViewController: UITableViewController {
+    @IBOutlet weak var displayNameLabel: UILabel!
     
-    var currentUser: FIRUser?
+    var currentUser = FIRAuth.auth()?.currentUser
     
-    private func loadUser() {
-        currentUser = FIRAuth.auth()?.currentUser
+    let usersBaseRef = FIRDatabase.database().reference(withPath: "users")
+    let chatGroupsRef = FIRDatabase.database().reference(withPath: "chatGroups")
+    let messagesRef = FIRDatabase.database().reference(withPath: "messages")
+    
+    private func isLoggedIn() -> Bool {
+        return self.currentUser != nil
     }
     
     override func viewDidLoad() {
@@ -25,7 +31,7 @@ class MyInfoTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        loadUser()
+        self.displayNameLabel.text = self.currentUser?.email
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +40,26 @@ class MyInfoTableViewController: UITableViewController {
     }
     
     private func clearChatLog() {
+        if isLoggedIn() {
+            usersBaseRef.child(self.currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                let user = User(snapshot: snapshot)
+                if let chatGroups = user.chatGroups {
+                    for chatGroup in chatGroups {
+                        self.chatGroupsRef.child(chatGroup).observeSingleEvent(of: .value, with: {(snapshot) in
+                            let chatGroup = ChatGroup(snapshot: snapshot)
+                            let userIds: [String] = chatGroup.users
+                            for userId in userIds {
+                                User.removeChatGroupWithUserId(userId: userId, chatGroupId: chatGroup.chatGroupId)
+                            }
+                            chatGroup.delete()
+                            self.messagesRef.child(chatGroup.chatGroupId).removeValue()
+                        })
+                    }
+                }
+            })
+        } else {
+            print("Login required")
+        }
         
     }
     

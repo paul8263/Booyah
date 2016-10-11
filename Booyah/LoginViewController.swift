@@ -54,7 +54,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        checkHasViewedTutorial()
+//        uncomment this line when finished testing
+//        checkHasViewedTutorial()
     }
     
     override func viewDidLoad() {
