@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import FirebaseStorage
 
 class TaskTableViewCell: UITableViewCell {
+    
+    var downloadTask: FIRStorageDownloadTask?
     
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var taskTitleLabel: UILabel!
@@ -32,5 +35,24 @@ class TaskTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.downloadTask?.cancel()
+    }
+    
+    func loadTaskImage(forUserId userId: String) {
+        let downloadTask = User.loadAvatar(forUserId: userId) { (data, error) in
+            if error != nil {
+                
+            } else {
+                if let data = data {
+                    let image = UIImage(data: data)
+                    self.taskImageView.image = image
+                }
+            }
+        }
+        self.downloadTask = downloadTask
+    }
+    
 }

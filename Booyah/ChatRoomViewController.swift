@@ -23,6 +23,10 @@ class ChatRoomViewController: JSQMessagesViewController {
     var outgoingMessageBubbleImage: JSQMessagesBubbleImage!
     var incomingMessageBubbleImage: JSQMessagesBubbleImage!
     
+    var incomingMessageAvatar: JSQMessagesAvatarImage?
+    var outgoingMessageAvatar: JSQMessagesAvatarImage?
+    let defaultMessageAvatar = JSQMessagesAvatarImage(avatarImage: UIImage(named: "default_avatar"), highlightedImage: UIImage(named: "default_avatar"), placeholderImage: UIImage(named: "default_avatar"))
+    
     private func observeAddedMessage() {
         let chatGroupId = chatGroup?.chatGroupId
         let currentChatRoomMessagesRef = messagesRef.child(chatGroupId!)
@@ -38,19 +42,36 @@ class ChatRoomViewController: JSQMessagesViewController {
         incomingMessageBubbleImage = factory.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
     }
     
-//    Todo
     private func setUpAvatar() {
-        self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
-        self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
+        self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize(width: 40.0, height: 40.0)
+        self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize(width: 40.0, height: 40.0)
+    }
+    
+    private func loadAvatars() {
+        for userId in chatGroup!.users {
+            User.loadAvatar(forUserId: userId, completion: { (data, error) in
+                if error != nil {
+                        
+                } else {
+                    if let data = data {
+                        let image = UIImage(data: data)
+                        if userId == self.currentUser!.uid {
+                            self.outgoingMessageAvatar = JSQMessagesAvatarImage(avatarImage: image, highlightedImage: image, placeholderImage: image)
+                        } else {
+                            self.incomingMessageAvatar = JSQMessagesAvatarImage(avatarImage: image, highlightedImage: image, placeholderImage: image)
+                        }
+                    }
+                }
+                self.collectionView.reloadData()
+            })
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         setUpBubbles()
         setUpAvatar()
-        
         tabBarController?.tabBar.isHidden = true
     }
     
@@ -58,6 +79,7 @@ class ChatRoomViewController: JSQMessagesViewController {
         super.viewDidAppear(animated)
         self.messageList.removeAll()
         observeAddedMessage()
+        loadAvatars()
         self.chatGroup?.getGroupDisplayName(currentUser: self.currentUser!, completionHandler: { (name) in
             self.navigationItem.title =  name
         })
@@ -97,7 +119,13 @@ class ChatRoomViewController: JSQMessagesViewController {
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return nil
+        let message = messageList[indexPath.row]
+        
+        if message.senderId == self.senderId {
+            return self.outgoingMessageAvatar == nil ? self.defaultMessageAvatar : self.outgoingMessageAvatar
+        } else {
+            return self.incomingMessageAvatar == nil ? self.defaultMessageAvatar : self.incomingMessageAvatar
+        }
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {

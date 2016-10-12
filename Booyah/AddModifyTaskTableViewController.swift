@@ -21,7 +21,7 @@ class AddModifyTaskTableViewController: UITableViewController {
     var isAddingTask = false
     var task: Task?
     
-    var delegate: AddModifyTaskTableViewControllerDelegate?
+    weak var delegate: AddModifyTaskTableViewControllerDelegate?
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!

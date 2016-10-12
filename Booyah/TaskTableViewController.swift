@@ -172,7 +172,7 @@ class TaskTableViewController: UITableViewController {
     private func loadTaskToCell(task: Task, taskTableViewCell: TaskTableViewCell) {
         taskTableViewCell.taskTitleLabel.text = task.title
         taskTableViewCell.taskAddressLabel.text = task.address
-//        Image view will be done later
+        taskTableViewCell.loadTaskImage(forUserId: task.userId)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -17,7 +17,7 @@ class TutorialPageViewController: UIPageViewController {
     
     var viewControllerList: [UIViewController] = []
     
-    var pageScrollDelegate: TutorialPageViewControllerDelegate?
+    weak var pageScrollDelegate: TutorialPageViewControllerDelegate?
     
     func setUpControllers() {
         self.viewControllerList = [

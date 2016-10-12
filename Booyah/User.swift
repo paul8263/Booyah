@@ -6,12 +6,15 @@
 //  Copyright © 2016 Paul Zhang. All rights reserved.
 //
 
+import UIKit
 import Foundation
 import FirebaseDatabase
 import FirebaseAuth
+import FirebaseStorage
 
 class User {
     static let userBaseRef = FIRDatabase.database().reference(withPath: "users")
+    static let avatarsStorageRef = FIRStorage.storage().reference(withPath: "avatars")
     var userId: String
     var displayName: String
     var email: String
@@ -121,6 +124,7 @@ class User {
         userTaskRef.removeValue()
     }
     
+//    Helper Method
     static func addChatGroupWithUserId(userId: String, chatGroupId: String) {
         let chatGroupRef = User.userBaseRef.child(userId).child("chatGroups").child(chatGroupId)
         chatGroupRef.setValue(true)
@@ -136,5 +140,21 @@ class User {
     static func removeTaskWithUserId(userId: String, taskId: String) {
         let userTaskRef = User.userBaseRef.child(userId).child("tasks").child(taskId)
         userTaskRef.removeValue()
+    }
+    static func loadAvatar(forUserId userId: String, completion: @escaping (_ data: Data?, _ error: Error?) -> Void) -> FIRStorageDownloadTask {
+        let downloadRef = User.avatarsStorageRef.child("\(userId).jpg")
+        let task = downloadRef.data(withMaxSize: 1 * 1024 * 1024, completion: completion)
+        return task
+    }
+    static func setAvatar(forUserId userId: String, image: UIImage) {
+        let avatarForCurrentUserRef = self.avatarsStorageRef.child("\(userId).jpg")
+        let imageData = UIImageJPEGRepresentation(image, 0.0)!
+        avatarForCurrentUserRef.put(imageData, metadata: nil, completion: { (metadata, error) in
+            if error != nil {
+                print("upload error")
+            } else {
+                print("upload success")
+            }
+        })
     }
 }

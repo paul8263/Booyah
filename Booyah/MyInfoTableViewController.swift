@@ -12,6 +12,7 @@ import FirebaseDatabase
 
 class MyInfoTableViewController: UITableViewController {
     @IBOutlet weak var displayNameLabel: UILabel!
+    @IBOutlet weak var avatarImageView: UIImageView!
     
     var currentUser = FIRAuth.auth()?.currentUser
     
@@ -23,6 +24,19 @@ class MyInfoTableViewController: UITableViewController {
         return self.currentUser != nil
     }
     
+    private func loadAvatar() {
+        User.loadAvatar(forUserId: self.currentUser!.uid) { (data, error) in
+            if error != nil {
+                print("Avatar not set")
+            } else {
+                if let data = data {
+                    let avatarImage = UIImage(data: data)
+                    self.avatarImageView.image = avatarImage
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,6 +46,7 @@ class MyInfoTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.displayNameLabel.text = self.currentUser?.email
+        loadAvatar()
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,7 +90,16 @@ class MyInfoTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 3 {
             performSegue(withIdentifier: "ShowMyTaskSegue", sender: nil)
+        } else if indexPath.section == 1 && indexPath.row == 0 {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.allowsEditing = false
+            imagePickerController.sourceType = .photoLibrary
+            imagePickerController.delegate = self
+            present(imagePickerController, animated: true, completion: nil)
+            
         } else if indexPath.section == 1 && indexPath.row == 1 {
+            performSegue(withIdentifier: "ChangePasswordSegue", sender: nil)
+        } else if indexPath.section == 1 && indexPath.row == 2 {
             let alertController = UIAlertController(title: "Clear Chat Log", message: "Your chat log will be cleared. Are you sure?", preferredStyle: UIAlertControllerStyle.actionSheet)
             let confirmAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.destructive, handler: { (action) in
                 self.clearChatLog()
@@ -86,9 +110,7 @@ class MyInfoTableViewController: UITableViewController {
             alertController.addAction(confirmAction)
             alertController.addAction(cancelAction)
             present(alertController, animated: true, completion: nil)
-        } else if indexPath.section == 1 && indexPath.row == 0 {
-            performSegue(withIdentifier: "ChangePasswordSegue", sender: nil)
-        } else if indexPath.section == 1 && indexPath.row == 2 {
+        } else if indexPath.section == 1 && indexPath.row == 3 {
             let alertController = UIAlertController(title: "Log Out", message: "Are you sure?", preferredStyle: UIAlertControllerStyle.actionSheet)
             let confirmAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.destructive, handler: { (action) in
                 self.logOut()
@@ -112,5 +134,18 @@ class MyInfoTableViewController: UITableViewController {
             let taskTableViewController = segue.destination as! TaskTableViewController
             taskTableViewController.isShowingTasksForCurrentUserOnly = true
         }
+    }
+}
+extension MyInfoTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.avatarImageView.image = image
+            User.setAvatar(forUserId: self.currentUser!.uid, image: image)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
