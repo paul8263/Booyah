@@ -21,6 +21,7 @@ class ChatTableViewController: UITableViewController {
     
     private func loadChatGroups() {
         self.chatGroupList.removeAll()
+        self.tableView.reloadData()
         usersRef.child(currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
             let user = User(snapshot: snapshot)
             if let groups = user.chatGroups {
@@ -52,8 +53,8 @@ class ChatTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         tabBarController?.tabBar.isHidden = false
         loadChatGroups()
     }

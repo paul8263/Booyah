@@ -12,6 +12,7 @@ target 'Booyah' do
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
   pod 'JSQMessagesViewController'
+  pod 'SDWebImage'
 
   target 'BooyahTests' do
     inherit! :search_paths

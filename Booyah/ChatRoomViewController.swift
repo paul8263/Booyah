@@ -10,6 +10,7 @@ import UIKit
 import JSQMessagesViewController
 import FirebaseDatabase
 import FirebaseAuth
+import SDWebImage
 
 class ChatRoomViewController: JSQMessagesViewController {
     
@@ -49,20 +50,38 @@ class ChatRoomViewController: JSQMessagesViewController {
     
     private func loadAvatars() {
         for userId in chatGroup!.users {
-            User.loadAvatar(forUserId: userId, completion: { (data, error) in
+//            User.loadAvatar(forUserId: userId, completion: { (data, error) in
+//                if error != nil {
+//                        
+//                } else {
+//                    if let data = data {
+//                        let image = UIImage(data: data)
+//                        if userId == self.currentUser!.uid {
+//                            self.outgoingMessageAvatar = JSQMessagesAvatarImage(avatarImage: image, highlightedImage: image, placeholderImage: image)
+//                        } else {
+//                            self.incomingMessageAvatar = JSQMessagesAvatarImage(avatarImage: image, highlightedImage: image, placeholderImage: image)
+//                        }
+//                    }
+//                }
+//                self.collectionView.reloadData()
+//            })
+            User.getAvatarDownloadURL(forUserId: userId, completion: { (url, error) in
                 if error != nil {
-                        
+                    
                 } else {
-                    if let data = data {
-                        let image = UIImage(data: data)
-                        if userId == self.currentUser!.uid {
-                            self.outgoingMessageAvatar = JSQMessagesAvatarImage(avatarImage: image, highlightedImage: image, placeholderImage: image)
+                    SDWebImageManager.shared().downloadImage(with: url, options: SDWebImageOptions.highPriority, progress: nil, completed: { (image, error, cacheType, finished, url) in
+                        if error == nil && image != nil && finished {
+                            if userId == self.currentUser!.uid {
+                                self.outgoingMessageAvatar = JSQMessagesAvatarImage(avatarImage: image, highlightedImage: image, placeholderImage: image)
+                            } else {
+                                self.incomingMessageAvatar = JSQMessagesAvatarImage(avatarImage: image, highlightedImage: image, placeholderImage: image)
+                            }
+                            self.collectionView.reloadData()
                         } else {
-                            self.incomingMessageAvatar = JSQMessagesAvatarImage(avatarImage: image, highlightedImage: image, placeholderImage: image)
+                            print("Image Download error")
                         }
-                    }
+                    })
                 }
-                self.collectionView.reloadData()
             })
         }
     }

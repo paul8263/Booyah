@@ -11,7 +11,7 @@ import FirebaseStorage
 
 class TaskTableViewCell: UITableViewCell {
     
-    var downloadTask: FIRStorageDownloadTask?
+//    var downloadTask: FIRStorageDownloadTask?
     
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var taskTitleLabel: UILabel!
@@ -38,21 +38,32 @@ class TaskTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.downloadTask?.cancel()
+//        self.downloadTask?.cancel()
+        self.taskImageView.sd_cancelCurrentImageLoad()
     }
     
+//    func loadTaskImage(forUserId userId: String) {
+//        let downloadTask = User.loadAvatar(forUserId: userId) { (data, error) in
+//            if error != nil {
+//                
+//            } else {
+//                if let data = data {
+//                    let image = UIImage(data: data)
+//                    self.taskImageView.image = image
+//                }
+//            }
+//        }
+//        self.downloadTask = downloadTask
+//    }
+    
     func loadTaskImage(forUserId userId: String) {
-        let downloadTask = User.loadAvatar(forUserId: userId) { (data, error) in
+        User.getAvatarDownloadURL(forUserId: userId) { (url, error) in
             if error != nil {
                 
             } else {
-                if let data = data {
-                    let image = UIImage(data: data)
-                    self.taskImageView.image = image
-                }
+                self.taskImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "default_avatar"))
             }
         }
-        self.downloadTask = downloadTask
     }
     
 }

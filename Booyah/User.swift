@@ -146,6 +146,12 @@ class User {
         let task = downloadRef.data(withMaxSize: 1 * 1024 * 1024, completion: completion)
         return task
     }
+    
+    static func getAvatarDownloadURL(forUserId userId: String, completion: @escaping (_ url: URL?, _ error: Error?) -> Void) {
+        let downloadRef = User.avatarsStorageRef.child("\(userId).jpg")
+        downloadRef.downloadURL(completion: completion)
+    }
+    
     static func setAvatar(forUserId userId: String, image: UIImage) {
         let avatarForCurrentUserRef = self.avatarsStorageRef.child("\(userId).jpg")
         let imageData = UIImageJPEGRepresentation(image, 0.0)!

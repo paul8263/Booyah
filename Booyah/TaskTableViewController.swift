@@ -22,6 +22,8 @@ class TaskTableViewController: UITableViewController {
     var searchController: UISearchController!
     
     func loadTasks(completion: (() -> Void)? = nil) {
+        self.taskList.removeAll()
+        self.tableView.reloadData()
         if isShowingTasksForCurrentUserOnly {
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 var newTaskList = [Task]()

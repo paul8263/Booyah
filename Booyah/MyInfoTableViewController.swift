@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
+import SDWebImage
 
 class MyInfoTableViewController: UITableViewController {
     @IBOutlet weak var displayNameLabel: UILabel!
@@ -25,14 +26,21 @@ class MyInfoTableViewController: UITableViewController {
     }
     
     private func loadAvatar() {
-        User.loadAvatar(forUserId: self.currentUser!.uid) { (data, error) in
+//        User.loadAvatar(forUserId: self.currentUser!.uid) { (data, error) in
+//            if error != nil {
+//                print("Avatar not set")
+//            } else {
+//                if let data = data {
+//                    let avatarImage = UIImage(data: data)
+//                    self.avatarImageView.image = avatarImage
+//                }
+//            }
+//        }
+        User.getAvatarDownloadURL(forUserId: self.currentUser!.uid) { (url, error) in
             if error != nil {
                 print("Avatar not set")
             } else {
-                if let data = data {
-                    let avatarImage = UIImage(data: data)
-                    self.avatarImageView.image = avatarImage
-                }
+                self.avatarImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "default_avatar"))
             }
         }
     }
